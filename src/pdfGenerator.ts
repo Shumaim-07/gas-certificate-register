@@ -157,8 +157,7 @@ export async function generateCertificatePdf(
     drawField(appliance.workDetails || "", pos.workDetails);
   });
 
-  return pdfDoc.save();
-}
+return pdfDoc.save() as Promise<Uint8Array>;}
 
 /* =========================
    PRINT
@@ -221,7 +220,7 @@ export async function downloadCertificatePdf(
 ): Promise<void> {
   const pdfBytes = await generateCertificatePdf(data);
 
-const blob = new Blob([pdfBytes], { type: "application/pdf" });
+const blob = new Blob([new Uint8Array(pdfBytes)], { type: "application/pdf" });
 const url = URL.createObjectURL(blob);
 
 // download with correct name

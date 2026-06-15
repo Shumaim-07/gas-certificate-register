@@ -15,9 +15,10 @@ export function SetupProfilePage() {
       engineerName: engineer.engineerName,
       gasSafeLicenceNumber: engineer.gasSafeLicenceNumber,
       businessName: engineer.businessName,
-      address: engineer.address,
+      houseAddress: engineer.houseAddress,
       postCode: engineer.postCode,
       contactNumber: engineer.contactNumber,
+      area: engineer.area,
     }
   })
   const [saving, setSaving] = useState(false)
