@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
-import { MONGODB_URI, ADMIN_USERNAME } from './config.js'
+import bcrypt from 'bcryptjs'
+import { ADMIN_INITIAL_PIN, MONGODB_URI, ADMIN_USERNAME } from './config.js'
 import { Admin } from './models/Admin.js'
 
 let connecting = false
@@ -13,6 +14,12 @@ export async function getOrCreateAdmin() {
   if (!admin) {
     admin = await Admin.create({ username: ADMIN_USERNAME, pinSet: false })
     console.log(`Admin account created — username: ${ADMIN_USERNAME}`)
+  }
+  if (!admin.pinSet && ADMIN_INITIAL_PIN) {
+    admin.pinHash = await bcrypt.hash(ADMIN_INITIAL_PIN, 10)
+    admin.pinSet = true
+    await admin.save()
+    console.log('Initial admin PIN configured')
   }
   return admin
 }
@@ -46,7 +53,7 @@ export async function connectDb() {
       serverSelectionTimeoutMS: 5000,
       connectTimeoutMS: 5000,
     })
-    console.log(`Connected to MongoDB at ${MONGODB_URI}`)
+    console.log('Connected to MongoDB')
     await seedAdmin()
   } finally {
     connecting = false

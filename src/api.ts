@@ -6,7 +6,8 @@ import type {
   SavedCertificate,
 } from './types'
 
-const API_BASE = '/api'
+const configuredApiBase = import.meta.env.VITE_API_URL?.trim()
+const API_BASE = (configuredApiBase || '/api').replace(/\/+$/, '')
 const TOKEN_KEY = 'gas_cert_token'
 const REQUEST_TIMEOUT_MS = 10000
 
@@ -44,9 +45,9 @@ async function request<T>(url: string, options?: RequestInit): Promise<T> {
     })
   } catch (err) {
     if (err instanceof Error && err.name === 'AbortError') {
-      throw new Error('Server not responding. Run: npm run dev (and start MongoDB).')
+      throw new Error('The server is taking too long to respond. Please try again.')
     }
-    throw new Error('Cannot connect to backend. Run: npm run dev')
+    throw new Error('Cannot connect to the server. Please try again later.')
   } finally {
     clearTimeout(timeoutId)
   }

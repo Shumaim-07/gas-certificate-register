@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import bcrypt from 'bcryptjs'
+import { rateLimit } from 'express-rate-limit'
 import { Engineer, engineerToJson } from '../models/Engineer.js'
 import { signToken, requireAuth } from '../middleware/auth.js'
 import { ADMIN_USERNAME } from '../config.js'
@@ -7,6 +8,14 @@ import { getOrCreateAdmin } from '../db.js'
 import { normalizeUserId } from '../utils/userId.js'
 
 const router = Router()
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 30,
+  standardHeaders: 'draft-8',
+  legacyHeaders: false,
+  skipSuccessfulRequests: true,
+  message: { error: 'Too many login attempts. Please wait 15 minutes and try again.' },
+})
 
 function validatePin(pin) {
   if (!/^\d{4,6}$/.test(pin)) {
@@ -33,7 +42,7 @@ router.get('/admin/status', async (_req, res) => {
   res.json({ username: admin.username, pinSet: admin.pinSet })
 })
 
-router.post('/admin/set-pin', async (req, res) => {
+router.post('/admin/set-pin', authLimiter, async (req, res) => {
   const { pin, confirmPin } = req.body
 
   if (!pin || !confirmPin) {
@@ -63,7 +72,7 @@ router.post('/admin/set-pin', async (req, res) => {
   res.json({ token, role: 'admin', username: admin.username })
 })
 
-router.post('/admin/login', async (req, res) => {
+router.post('/admin/login', authLimiter, async (req, res) => {
   const { pin } = req.body
 
   if (!pin) {
@@ -85,7 +94,7 @@ router.post('/admin/login', async (req, res) => {
   res.json({ token, role: 'admin', username: admin.username })
 })
 
-router.post('/engineer/check-user', async (req, res) => {
+router.post('/engineer/check-user', authLimiter, async (req, res) => {
   const userId = normalizeUserId(req.body.userId ?? '')
   if (!userId) {
     return res.status(400).json({ error: 'User ID is required' })
@@ -99,7 +108,7 @@ router.post('/engineer/check-user', async (req, res) => {
   res.json({ userId: engineer.userId, pinSet: engineer.pinSet })
 })
 
-router.post('/engineer/set-pin', async (req, res) => {
+router.post('/engineer/set-pin', authLimiter, async (req, res) => {
   const userId = normalizeUserId(req.body.userId ?? '')
   const { pin, confirmPin } = req.body
 
@@ -138,7 +147,7 @@ router.post('/engineer/set-pin', async (req, res) => {
   })
 })
 
-router.post('/engineer/login', async (req, res) => {
+router.post('/engineer/login', authLimiter, async (req, res) => {
   const userId = normalizeUserId(req.body.userId ?? '')
   const { pin } = req.body
 

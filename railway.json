@@ -1,11 +1,12 @@
 {
   "build": {
-    "builder": "NIXPACKS",
-    "buildCommand": "cd server && npm install"
+    "builder": "RAILPACK",
+    "buildCommand": "npm ci --omit=dev"
   },
   "deploy": {
-    "startCommand": "cd server && node index.js",
+    "startCommand": "npm start",
     "healthcheckPath": "/api/health",
+    "healthcheckTimeout": 30,
     "restartPolicyType": "ON_FAILURE"
   }
 }

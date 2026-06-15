@@ -2,7 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import mongoose from 'mongoose'
 import { connectDb, ensureDbConnected, isDbConnected } from './db.js'
-import { PORT } from './config.js'
+import { CLIENT_URLS, NODE_ENV, PORT } from './config.js'
 import authRoutes from './routes/auth.js'
 import adminRoutes from './routes/admin.js'
 import engineerRoutes from './routes/engineer.js'
@@ -10,8 +10,24 @@ import certificateRoutes from './routes/certificates.js'
 
 const app = express()
 
-app.use(cors())
-app.use(express.json())
+app.disable('x-powered-by')
+app.set('trust proxy', 1)
+app.use(cors({
+  origin(origin, callback) {
+    if (!origin) {
+      return callback(null, true)
+    }
+
+    const normalizedOrigin = origin.replace(/\/+$/, '')
+    const developmentOrigin = NODE_ENV !== 'production' && /^http:\/\/localhost:\d+$/.test(normalizedOrigin)
+    if (developmentOrigin || CLIENT_URLS.includes(normalizedOrigin)) {
+      return callback(null, true)
+    }
+
+    return callback(new Error('Origin not allowed by CORS'))
+  },
+}))
+app.use(express.json({ limit: '2mb' }))
 
 app.get('/api/health', (_req, res) => {
   res.json({
@@ -47,27 +63,26 @@ app.use((err, _req, res, _next) => {
 })
 
 async function start() {
-  app.listen(PORT, () => {
-    console.log(`API server running at http://localhost:${PORT}`)
-    console.log(`Health check: http://localhost:${PORT}/api/health`)
-  })
-
   try {
     await connectDb()
-  } catch (err) {
-    console.error('\nMongoDB connection failed — API will return errors until DB is available.')
-    console.error(`URI: ${process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/gas-cert'}`)
-    if (err.message?.includes('ECONNREFUSED') || err.name === 'MongooseServerSelectionError') {
-      console.error('Start MongoDB: open Services → start "MongoDB Server", or run: net start MongoDB')
-    } else {
-      console.error(err.message)
+    const server = app.listen(PORT, '0.0.0.0', () => {
+      console.log(`API server listening on port ${PORT}`)
+    })
+
+    async function shutdown(signal) {
+      console.log(`${signal} received; shutting down`)
+      server.close(async () => {
+        await mongoose.disconnect()
+        process.exit(0)
+      })
     }
+
+    process.on('SIGINT', () => shutdown('SIGINT'))
+    process.on('SIGTERM', () => shutdown('SIGTERM'))
+  } catch (err) {
+    console.error('Server startup failed:', err.message)
+    process.exit(1)
   }
 }
 
 start()
-
-process.on('SIGINT', async () => {
-  await mongoose.disconnect()
-  process.exit(0)
-})
