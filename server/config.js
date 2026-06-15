@@ -6,7 +6,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 dotenv.config({ path: path.join(__dirname, '..', '.env') })
 dotenv.config({ path: path.join(__dirname, '.env') })
 
-export const PORT = process.env.PORT || 3001
+export const PORT = process.env.PORT || 8080
 // REMOVE the localhost fallback - use only Railway's variable
 export const MONGODB_URI = process.env.MONGODB_URI
 export const JWT_SECRET = process.env.JWT_SECRET || 'gas-cert-dev-secret-change-in-production'
