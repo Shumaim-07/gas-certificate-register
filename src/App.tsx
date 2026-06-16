@@ -10,6 +10,7 @@ import { EditProfilePage } from './pages/EditProfilePage'
 import { LoginPage } from './pages/LoginPage'
 import { SetPinPage } from './pages/SetPinPage'
 import { SetupProfilePage } from './pages/SetupProfilePage'
+import { LandingPage } from './pages/LandingPage'  // ← NEW IMPORT
 
 function EngineerGuard({ children }: { children: ReactNode }) {
   const { engineer, loading } = useAuth()
@@ -35,10 +36,8 @@ function AppRoutes() {
 
   return (
     <Routes>
-      <Route
-        path="/"
-        element={<Navigate to={role === 'admin' ? '/admin' : role === 'engineer' ? '/dashboard' : '/login'} replace />}
-      />
+      {/* NEW: Landing Page - Everyone sees this first */}
+      <Route path="/" element={<LandingPage />} />  {/* ← NEW ROUTE */}
 
       <Route path="/login" element={role === 'engineer' ? <Navigate to="/dashboard" replace /> : <LoginPage />} />
       <Route path="/set-pin" element={<SetPinPage />} />

@@ -7,6 +7,7 @@ import authRoutes from './routes/auth.js'
 import adminRoutes from './routes/admin.js'
 import engineerRoutes from './routes/engineer.js'
 import certificateRoutes from './routes/certificates.js'
+import requestRoutes from './routes/requests.js'
 
 const app = express()
 
@@ -56,6 +57,7 @@ app.use('/api/auth', authRoutes)
 app.use('/api/admin', adminRoutes)
 app.use('/api/engineer', engineerRoutes)
 app.use('/api/certificates', certificateRoutes)
+app.use('/api/requests', requestRoutes)
 
 app.use((err, _req, res, _next) => {
   console.error('Unhandled error:', err)
