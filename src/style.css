@@ -1451,6 +1451,302 @@ html {
   color: rgba(255, 255, 255, 0.28);
 }
 
+/* ================================================================
+   LOGIN PAGE — SPLIT LAYOUT
+   ================================================================ */
+
+.login-split {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  font-family: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* ── Left dark panel ── */
+.login-left {
+  background: #3D3431;
+  display: flex;
+  flex-direction: column;
+  padding: 2.5rem 3rem;
+  min-height: 100vh;
+}
+
+.lp-login-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: auto;
+}
+
+.lp-login-logo span {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.01em;
+}
+
+.login-left-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem 0 2rem;
+}
+
+.login-left-h1 {
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin-bottom: 0.5rem;
+}
+
+.login-left-sub {
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  margin-bottom: 1.25rem;
+}
+
+.login-cp12 {
+  color: #F4EA03;
+}
+
+.login-left-desc {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.55);
+  line-height: 1.75;
+}
+
+.login-left-trust {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.28);
+  text-transform: uppercase;
+  margin-top: auto;
+}
+
+/* ── Right panel ── */
+.login-right {
+  background: #f0f2f5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  min-height: 100vh;
+  gap: 1.25rem;
+}
+
+/* ── White card ── */
+.login-card {
+  background: #fff;
+  border-radius: 16px;
+  border: 1.5px solid #e2e4e8;
+  padding: 2.5rem 2.25rem 2rem;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+}
+
+.login-card-h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 0.3rem;
+  letter-spacing: -0.02em;
+}
+
+.login-card-sub {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin-bottom: 1.5rem;
+}
+
+.login-error {
+  background: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  padding: 0.65rem 0.9rem;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+/* ── Form fields ── */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.login-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.login-field label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #374151;
+  text-transform: uppercase;
+}
+
+.login-field input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1.5px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: #1a1a1a;
+  background: #fff;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.login-field input:focus {
+  outline: none;
+  border-color: #3D3431;
+  box-shadow: 0 0 0 3px rgba(61, 52, 49, 0.1);
+}
+
+.login-field input::placeholder {
+  color: #9ca3af;
+}
+
+/* back link for step 2 */
+.login-back {
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #64748b;
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+  transition: color 0.15s;
+  margin-bottom: -0.25rem;
+}
+
+.login-back:hover {
+  color: #3D3431;
+}
+
+/* ── Primary button ── */
+.login-btn {
+  width: 100%;
+  padding: 0.85rem;
+  background: #F4EA03;
+  color: #1a1a1a;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  margin-top: 0.25rem;
+}
+
+.login-btn:hover:not(:disabled) {
+  background: #e8d800;
+}
+
+.login-btn:active:not(:disabled) {
+  transform: scale(0.99);
+}
+
+.login-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* ── OR divider ── */
+.login-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 1.25rem 0 0;
+  color: #9ca3af;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.login-divider::before,
+.login-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #e5e7eb;
+}
+
+/* ── Sign-up row ── */
+.login-signup-text {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+.login-signup-link {
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  padding: 0;
+  transition: color 0.15s;
+}
+
+.login-signup-link:hover {
+  color: #3D3431;
+}
+
+/* ── Footer note ── */
+.login-footer-note {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  text-align: center;
+  max-width: 340px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .login-split {
+    grid-template-columns: 1fr;
+  }
+
+  .login-left {
+    min-height: auto;
+    padding: 2rem 1.5rem;
+  }
+
+  .login-left-body {
+    padding: 2rem 0 1.5rem;
+  }
+
+  .login-left-trust {
+    margin-top: 1.5rem;
+  }
+
+  .login-right {
+    min-height: auto;
+    padding: 2rem 1.25rem 3rem;
+  }
+}
+
 /* ── Request Access Modal ── */
 .req-modal-overlay {
   position: fixed;

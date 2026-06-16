@@ -1,8 +1,27 @@
 import { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { api } from '../api'
 import { sanitizeUserIdInput } from '../utils/userId'
 import { useAuth } from '../context/AuthContext'
+import { RequestModal } from '../components/RequestModal'
+
+function LogoMark() {
+  return (
+    <div className="lp-login-logo">
+      <svg width="32" height="32" viewBox="0 0 28 28" fill="none">
+        <rect width="28" height="28" rx="7" fill="#F4EA03" />
+        <polyline
+          points="7,14 11,18 21,9"
+          stroke="#3D3431"
+          strokeWidth="3"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+      <span>GasCertify UK</span>
+    </div>
+  )
+}
 
 export function LoginPage() {
   const navigate = useNavigate()
@@ -14,6 +33,7 @@ export function LoginPage() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [serverOk, setServerOk] = useState<boolean | null>(null)
+  const [showRequestModal, setShowRequestModal] = useState(false)
 
   useEffect(() => {
     api.healthCheck()
@@ -34,7 +54,6 @@ export function LoginPage() {
       setError('Please enter your User ID')
       return
     }
-
     setLoading(true)
     setError(null)
     try {
@@ -57,7 +76,6 @@ export function LoginPage() {
       setError('Please enter your password')
       return
     }
-
     setLoading(true)
     setError(null)
     try {
@@ -76,71 +94,119 @@ export function LoginPage() {
     }
   }
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      step === 'userid' ? handleCheckUser() : handleLogin()
+    }
+  }
+
   return (
-    <div className="page-center">
-      <div className="page-card auth-card">
-        <div className="page-header">
-          <h1>Engineer Login</h1>
-          <p>
-            {step === 'userid'
-              ? 'Enter the User ID created by your admin.'
-              : `User ID: ${checkedUserId} — enter your password.`}
+    <div className="login-split">
+      {showRequestModal && <RequestModal onClose={() => setShowRequestModal(false)} />}
+
+      {/* ── LEFT PANEL ── */}
+      <div className="login-left">
+        <LogoMark />
+
+        <div className="login-left-body">
+          <h1 className="login-left-h1">
+            Welcome back.
+          </h1>
+          <p className="login-left-sub">
+            Your next <span className="login-cp12">CP12</span> is one tap away.
+          </p>
+          <p className="login-left-desc">
+            Pick up where you left off — properties,<br />
+            appliances and signatures, all ready when you are.
           </p>
         </div>
 
-        {serverOk === false && error && <div className="alert alert-error">{error}</div>}
-        {serverOk === true && error && <div className="alert alert-error">{error}</div>}
+        <p className="login-left-trust">TRUSTED BY UK GAS SAFE ENGINEERS</p>
+      </div>
 
-        <div className="form-grid single-col">
-          {step === 'userid' ? (
-            <label className="form-field full-width">
-              <span>User ID</span>
-              <input
-                type="text"
-                value={userId}
-                onChange={(e) => setUserId(sanitizeUserIdInput(e.target.value))}
-                placeholder="e.g. JOHN123"
-                maxLength={20}
-                autoComplete="username"
-              />
-            </label>
-          ) : (
-            <label className="form-field full-width">
-              <span>Password</span>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Your password"
-                maxLength={6}
-                inputMode="numeric"
-                autoComplete="current-password"
-              />
-            </label>
+      {/* ── RIGHT PANEL ── */}
+      <div className="login-right">
+        <div className="login-card">
+          <h2 className="login-card-h2">Log in</h2>
+          <p className="login-card-sub">Engineer &amp; admin access.</p>
+
+          {error && (
+            <div className="login-error">{error}</div>
           )}
+
+          <div className="login-form">
+            {step === 'userid' ? (
+              <div className="login-field">
+                <label htmlFor="login-userid">USER ID</label>
+                <input
+                  id="login-userid"
+                  type="text"
+                  value={userId}
+                  onChange={(e) => setUserId(sanitizeUserIdInput(e.target.value))}
+                  onKeyDown={handleKeyDown}
+                  placeholder="e.g. ENG001"
+                  maxLength={20}
+                  autoComplete="username"
+                  autoFocus
+                />
+              </div>
+            ) : (
+              <>
+                <button
+                  type="button"
+                  className="login-back"
+                  onClick={() => { setStep('userid'); setPassword(''); setError(null) }}
+                >
+                  ← {checkedUserId}
+                </button>
+                <div className="login-field">
+                  <label htmlFor="login-password">PASSWORD</label>
+                  <input
+                    id="login-password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    placeholder="••••••"
+                    maxLength={6}
+                    inputMode="numeric"
+                    autoComplete="current-password"
+                    autoFocus
+                  />
+                </div>
+              </>
+            )}
+
+            <button
+              type="button"
+              className="login-btn"
+              onClick={step === 'userid' ? handleCheckUser : handleLogin}
+              disabled={loading || serverOk === false}
+            >
+              {loading
+                ? 'Please wait…'
+                : step === 'userid'
+                  ? 'Continue'
+                  : 'Log in'}
+            </button>
+          </div>
+
+          <div className="login-divider"><span>OR</span></div>
+
+          <p className="login-signup-text">
+            New engineer?{' '}
+            <button
+              type="button"
+              className="login-signup-link"
+              onClick={() => setShowRequestModal(true)}
+            >
+              Get started
+            </button>
+          </p>
         </div>
 
-        {step === 'login' && (
-          <button
-            type="button"
-            className="link-btn back-step-btn"
-            onClick={() => { setStep('userid'); setPassword(''); setError(null) }}
-          >
-            ← Use different User ID
-          </button>
-        )}
-
-        <button
-          type="button"
-          className="primary-btn"
-          onClick={step === 'userid' ? handleCheckUser : handleLogin}
-          disabled={loading || serverOk === false}
-        >
-          {loading ? 'Please wait…' : step === 'userid' ? 'Continue' : 'Login'}
-        </button>
-
-        <p className="auth-footer">
-          Admin? <Link to="/admin/login">Go to Admin Panel</Link>
+        <p className="login-footer-note">
+          Protected sign-in. Only Gas Safe registered engineers can issue certificates.
         </p>
       </div>
     </div>
