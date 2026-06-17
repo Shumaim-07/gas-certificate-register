@@ -39,8 +39,8 @@ export function SetupProfilePage() {
   }
 
   return (
-    <div className="page-center">
-      {error && <div className="alert alert-error">{error}</div>}
+    <div className="eng-form-page">
+      {error && <div className="alert alert-error" style={{ maxWidth: 640, width: '100%' }}>{error}</div>}
       <EngineerForm
         data={data}
         onChange={setData}

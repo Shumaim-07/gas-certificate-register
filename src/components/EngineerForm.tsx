@@ -10,15 +10,15 @@ interface EngineerFormProps {
   subtitle: string
 }
 
-const fields: { key: keyof EngineerFormData; label: string; multiline?: boolean }[] = [
-  { key: 'gasSafeRegisterNumber', label: 'Gas Safe Register Number' },
-  { key: 'engineerName', label: 'Registered Engineer Name' },
-  { key: 'gasSafeLicenceNumber', label: 'Gas Safe Register Licence Number' },
-  { key: 'businessName', label: 'Business Name' },
-  { key: 'houseAddress', label: 'House / Street Address', multiline: true },
-  { key: 'area', label: 'Area / City', multiline: true },
-  { key: 'postCode', label: 'Post Code' },
-  { key: 'contactNumber', label: 'Contact Number' },
+const fields: { key: keyof EngineerFormData; label: string; placeholder?: string; multiline?: boolean; full?: boolean }[] = [
+  { key: 'gasSafeRegisterNumber', label: 'Gas Safe Register No.', placeholder: 'e.g. 512887' },
+  { key: 'engineerName', label: 'Registered Engineer Name', placeholder: 'Full name as on Gas Safe card' },
+  { key: 'gasSafeLicenceNumber', label: 'Licence Number', placeholder: 'e.g. 123456' },
+  { key: 'businessName', label: 'Business Name', placeholder: 'Your company or trading name' },
+  { key: 'houseAddress', label: 'Street Address', placeholder: 'House number and street', multiline: true, full: true },
+  { key: 'area', label: 'Area / City', placeholder: 'Town or city', full: true },
+  { key: 'postCode', label: 'Post Code', placeholder: 'e.g. SW1A 1AA' },
+  { key: 'contactNumber', label: 'Contact Number', placeholder: 'e.g. 07700 900000' },
 ]
 
 export function EngineerForm({
@@ -35,34 +35,41 @@ export function EngineerForm({
   }
 
   return (
-    <div className="page-card engineer-form-card">
-      <div className="page-header">
-        <h1>{title}</h1>
-        <p>{subtitle}</p>
+    <div className="eng-form-card">
+      <div className="eng-form-header">
+        <div className="eng-form-accent" />
+        <div>
+          <h1 className="eng-form-title">{title}</h1>
+          <p className="eng-form-sub">{subtitle}</p>
+        </div>
       </div>
 
-      <div className="form-grid single-col">
+      <div className="eng-form-grid">
         {fields.map((field) => (
-          <label key={field.key} className="form-field full-width">
-            <span>{field.label}</span>
+          <div key={field.key} className={`eng-field${field.full ? ' eng-field--full' : ''}`}>
+            <label htmlFor={`ef-${field.key}`}>{field.label}</label>
             {field.multiline ? (
               <textarea
+                id={`ef-${field.key}`}
                 value={data[field.key]}
                 onChange={(e) => updateField(field.key, e.target.value)}
-                rows={3}
+                placeholder={field.placeholder}
+                rows={2}
               />
             ) : (
               <input
+                id={`ef-${field.key}`}
                 type={field.key === 'contactNumber' ? 'tel' : 'text'}
                 value={data[field.key]}
                 onChange={(e) => updateField(field.key, e.target.value)}
+                placeholder={field.placeholder}
               />
             )}
-          </label>
+          </div>
         ))}
       </div>
 
-      <button type="button" className="primary-btn" onClick={onSubmit} disabled={saving}>
+      <button type="button" className="eng-submit-btn" onClick={onSubmit} disabled={saving}>
         {saving ? 'Saving…' : submitLabel}
       </button>
     </div>

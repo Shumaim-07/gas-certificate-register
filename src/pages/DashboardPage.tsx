@@ -19,85 +19,96 @@ export function DashboardPage() {
   if (!engineer) return null
 
   return (
-    <div className="dashboard">
-      <header className="dashboard-header">
-        <div>
-          <h1>Engineer Dashboard</h1>
-          <p>Welcome, {engineer.engineerName || engineer.userId}</p>
+    <div className="eng-dashboard">
+      {/* ── Top bar ── */}
+      <header className="eng-topbar">
+        <div className="eng-topbar-brand">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <rect width="28" height="28" rx="7" fill="#F4EA03" />
+            <polyline points="6,14 11,19 22,9" stroke="#3D3431" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+          <span>GasCertify UK</span>
         </div>
-        <div className="dashboard-actions">
-          <Link to="/certificate/new" className="primary-btn">+ New Gas Certificate</Link>
-          <Link to="/profile/edit" className="secondary-btn">Edit Details</Link>
-          <button type="button" className="secondary-btn" onClick={logout}>Logout</button>
+        <div className="eng-topbar-actions">
+          <Link to="/certificate/new" className="eng-btn-primary">+ New Certificate</Link>
+          <Link to="/profile/edit" className="eng-btn-ghost">Edit Details</Link>
+          <button type="button" className="eng-btn-ghost" onClick={logout}>Logout</button>
         </div>
       </header>
 
-      <section className="profile-card">
-        <h2>Your Registered Details</h2>
-        <dl className="profile-grid">
-          <div><dt>User ID</dt><dd>{engineer.userId}</dd></div>
-          <div><dt>Gas Safe Register No.</dt><dd>{engineer.gasSafeRegisterNumber}</dd></div>
-          <div><dt>Engineer Name</dt><dd>{engineer.engineerName}</dd></div>
-          <div><dt>Licence Number</dt><dd>{engineer.gasSafeLicenceNumber}</dd></div>
-          <div><dt>Business Name</dt><dd>{engineer.businessName}</dd></div>
-          <div><dt>Address</dt><dd>{engineer.houseAddress}</dd></div>
-          <div><dt>Post Code</dt><dd>{engineer.postCode}</dd></div>
-          <div><dt>Contact Number</dt><dd>{engineer.contactNumber}</dd></div>
-        </dl>
-      </section>
+      <div className="eng-dashboard-body">
+        {/* ── Welcome strip ── */}
+        <div className="eng-welcome">
+          <div>
+            <h1 className="eng-welcome-h1">Welcome back, {engineer.engineerName || engineer.userId}</h1>
+            <p className="eng-welcome-sub">Gas Safe No. {engineer.gasSafeRegisterNumber || '—'} · {engineer.businessName || 'Engineer Dashboard'}</p>
+          </div>
+        </div>
 
-      <section className="certificates-section">
-        <h2>Recent Certificates</h2>
-        {loading ? (
-          <p className="muted">Loading certificates…</p>
-        ) : certificates.length === 0 ? (
-          <div className="empty-state">
-            <p>No certificates yet.</p>
-            <Link to="/certificate/new" className="primary-btn">Create your first certificate</Link>
+        {/* ── Profile details ── */}
+        <section className="eng-profile-card">
+          <div className="eng-card-header">
+            <h2>Registered Details</h2>
+            <Link to="/profile/edit" className="eng-card-edit-link">Edit →</Link>
           </div>
-        ) : (
-          <div className="cert-table-wrap">
-            <table className="cert-table">
-              <thead>
-                <tr>
-                  <th>Reference</th>
-                  <th>Property</th>
-                  <th>Landlord</th>
-                  <th>Date</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {certificates.map((cert) => (
-                  <tr key={cert.id}>
-                    <td>{cert.certificateRef || '—'}</td>
-                    <td>{cert.data.propertyAddress || '—'}</td>
-                    <td>{cert.data.landlordName || '—'}</td>
-                    <td>{cert.data.issueDate || '—'}</td>
-                    <td>
-                     <td className="action-buttons">
-  <button 
-    onClick={async () => {
-      try {
-        const { printCertificatePdf } = await import('../pdfGenerator')
-        await printCertificatePdf(cert.data)
-      } catch (err) {
-        console.error('Failed to print PDF:', err)
-      }
-    }} 
-    className="link-btn"
-  >
-    Open PDF
-  </button>
-</td>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <dl className="eng-profile-grid">
+            <div><dt>User ID</dt><dd>{engineer.userId}</dd></div>
+            <div><dt>Gas Safe Register No.</dt><dd>{engineer.gasSafeRegisterNumber || '—'}</dd></div>
+            <div><dt>Engineer Name</dt><dd>{engineer.engineerName || '—'}</dd></div>
+            <div><dt>Licence Number</dt><dd>{engineer.gasSafeLicenceNumber || '—'}</dd></div>
+            <div><dt>Business Name</dt><dd>{engineer.businessName || '—'}</dd></div>
+            <div><dt>Post Code</dt><dd>{engineer.postCode || '—'}</dd></div>
+            <div><dt>Contact</dt><dd>{engineer.contactNumber || '—'}</dd></div>
+            <div><dt>Address</dt><dd>{engineer.houseAddress || '—'}</dd></div>
+          </dl>
+        </section>
+
+        {/* ── Certificates ── */}
+        <section className="eng-certs-section">
+          <div className="eng-card-header">
+            <h2>Certificates {!loading && certificates.length > 0 && <span className="eng-cert-count">{certificates.length}</span>}</h2>
+            <Link to="/certificate/new" className="eng-btn-primary eng-btn-sm">+ New</Link>
           </div>
-        )}
-      </section>
+
+          {loading ? (
+            <p className="muted" style={{ padding: '1.5rem 0' }}>Loading certificates…</p>
+          ) : certificates.length === 0 ? (
+            <div className="eng-empty">
+              <p>No certificates yet — create your first one.</p>
+              <Link to="/certificate/new" className="eng-btn-primary">Create Certificate</Link>
+            </div>
+          ) : (
+            <div className="eng-cert-list">
+              {certificates.map((cert) => (
+                <div key={cert.id} className="eng-cert-row">
+                  <div className="eng-cert-ref">{cert.certificateRef || '—'}</div>
+                  <div className="eng-cert-detail">
+                    <span className="eng-cert-property">{cert.data.siteHouseAddress || cert.data.propertyAddress || '—'}</span>
+                    <span className="eng-cert-meta">{cert.data.landlordName || '—'} · {cert.data.issueDate || '—'}</span>
+                  </div>
+                  <div className="eng-cert-actions">
+                    <Link to={`/certificate/${cert.id}`} className="eng-cert-btn">Edit</Link>
+                    <button
+                      type="button"
+                      className="eng-cert-btn eng-cert-btn--primary"
+                      onClick={async () => {
+                        try {
+                          const { printCertificatePdf } = await import('../pdfGenerator')
+                          await printCertificatePdf(cert.data)
+                        } catch (err) {
+                          console.error('Failed to print PDF:', err)
+                        }
+                      }}
+                    >
+                      PDF
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
+      </div>
     </div>
   )
 }

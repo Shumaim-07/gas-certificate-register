@@ -603,6 +603,992 @@ a {
   }
 }
 
+/* ================================================================
+   ENGINEER DASHBOARD
+   ================================================================ */
+
+.eng-dashboard {
+  min-height: 100vh;
+  background: #f0f2f5;
+  font-family: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* ── Top bar ── */
+.eng-topbar {
+  background: #3D3431;
+  padding: 0 1.5rem;
+  height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.eng-topbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.eng-topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+/* ── Shared button classes ── */
+.eng-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 1.1rem;
+  background: #F4EA03;
+  color: #1a1a1a;
+  border: none;
+  border-radius: 7px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+
+.eng-btn-primary:hover {
+  background: #e8d800;
+}
+
+.eng-btn-primary:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.eng-btn-primary.eng-btn-sm {
+  padding: 0.38rem 0.75rem;
+  font-size: 0.8rem;
+}
+
+.eng-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 1rem;
+  background: transparent;
+  color: #fff;
+  border: 1.5px solid rgba(255,255,255,0.3);
+  border-radius: 7px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+
+.eng-btn-ghost:hover {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.5);
+}
+
+/* ── Dashboard body ── */
+.eng-dashboard-body {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ── Welcome strip ── */
+.eng-welcome {
+  background: #3D3431;
+  border-radius: 14px;
+  padding: 1.5rem 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.eng-welcome-h1 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.2rem;
+}
+
+.eng-welcome-sub {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.55);
+}
+
+/* ── Card header ── */
+.eng-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.eng-card-header h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #3D3431;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.eng-card-edit-link {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #3D3431;
+  text-decoration: none;
+  opacity: 0.6;
+  transition: opacity 0.15s;
+}
+
+.eng-card-edit-link:hover { opacity: 1; }
+
+.eng-cert-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 0.4rem;
+  background: #F4EA03;
+  color: #3D3431;
+  font-size: 0.72rem;
+  font-weight: 700;
+  border-radius: 999px;
+}
+
+/* ── Profile card ── */
+.eng-profile-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  border-left: 4px solid #F4EA03;
+}
+
+.eng-profile-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.eng-profile-grid dt {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.15rem;
+}
+
+.eng-profile-grid dd {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+/* ── Certificates section ── */
+.eng-certs-section {
+  background: #fff;
+  border-radius: 14px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+}
+
+.eng-empty {
+  text-align: center;
+  padding: 2.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.eng-empty p {
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+/* ── Certificate list rows ── */
+.eng-cert-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid #f1f5f9;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.eng-cert-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid #f1f5f9;
+  transition: background 0.1s;
+}
+
+.eng-cert-row:last-child {
+  border-bottom: none;
+}
+
+.eng-cert-row:hover {
+  background: #fafafa;
+}
+
+.eng-cert-ref {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #3D3431;
+  background: #F4EA03;
+  padding: 0.2rem 0.5rem;
+  border-radius: 5px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.eng-cert-detail {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.eng-cert-property {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1e293b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.eng-cert-meta {
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+.eng-cert-actions {
+  display: flex;
+  gap: 0.4rem;
+  flex-shrink: 0;
+}
+
+.eng-cert-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem 0.7rem;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  border: 1.5px solid #e2e8f0;
+  background: #fff;
+  color: #3D3431;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.eng-cert-btn:hover {
+  background: #f8fafc;
+  border-color: #3D3431;
+}
+
+.eng-cert-btn--primary {
+  background: #3D3431;
+  color: #F4EA03;
+  border-color: #3D3431;
+}
+
+.eng-cert-btn--primary:hover {
+  background: #2a2320;
+  border-color: #2a2320;
+}
+
+/* ================================================================
+   ENGINEER FORMS (Profile Setup, Edit Profile, Set PIN)
+   ================================================================ */
+
+.eng-form-page {
+  min-height: 100vh;
+  background: #f0f2f5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.25rem;
+  gap: 1rem;
+  font-family: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+}
+
+.eng-back-link {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #3D3431;
+  text-decoration: none;
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  opacity: 0.7;
+  transition: opacity 0.15s;
+}
+
+.eng-back-link:hover { opacity: 1; }
+
+/* ── Engineer form card ── */
+.eng-form-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 0;
+  width: 100%;
+  max-width: 680px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  overflow: hidden;
+}
+
+.eng-form-header {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+}
+
+.eng-form-accent {
+  width: 6px;
+  background: #F4EA03;
+  flex-shrink: 0;
+}
+
+.eng-form-header > div {
+  padding: 1.5rem 1.75rem 1.25rem;
+  border-bottom: 1px solid #f1f5f9;
+  flex: 1;
+}
+
+.eng-form-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #3D3431;
+  margin-bottom: 0.3rem;
+}
+
+.eng-form-sub {
+  font-size: 0.875rem;
+  color: #64748b;
+}
+
+.eng-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.1rem;
+  padding: 1.25rem 1.75rem;
+}
+
+/* ── Shared field styles ── */
+.eng-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.65rem 0;
+}
+
+.eng-field--full {
+  grid-column: 1 / -1;
+}
+
+.eng-field label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.eng-field input,
+.eng-field textarea,
+.eng-field select {
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 0.65rem 0.85rem;
+  font-size: 0.9rem;
+  font-family: inherit;
+  color: #1a1a1a;
+  background: #fff;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.eng-field input:focus,
+.eng-field textarea:focus,
+.eng-field select:focus {
+  outline: none;
+  border-color: #3D3431;
+  box-shadow: 0 0 0 3px rgba(61, 52, 49, 0.1);
+}
+
+.eng-field input::placeholder,
+.eng-field textarea::placeholder {
+  color: #94a3b8;
+}
+
+.eng-field textarea {
+  resize: none;
+}
+
+/* ── Submit button ── */
+.eng-submit-btn {
+  display: block;
+  width: calc(100% - 3.5rem);
+  margin: 0 1.75rem 1.75rem;
+  padding: 0.85rem;
+  background: #3D3431;
+  color: #F4EA03;
+  border: none;
+  border-radius: 9px;
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s;
+  text-align: center;
+}
+
+.eng-submit-btn:hover:not(:disabled) {
+  background: #2a2320;
+}
+
+.eng-submit-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* ── Set PIN card ── */
+.eng-pin-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.5rem;
+}
+
+.eng-pin-icon {
+  margin-bottom: 0.5rem;
+}
+
+.eng-pin-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #3D3431;
+}
+
+.eng-pin-sub {
+  font-size: 0.875rem;
+  color: #64748b;
+  line-height: 1.6;
+  margin-bottom: 0.5rem;
+}
+
+.eng-pin-fields {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin: 0.5rem 0 1rem;
+  text-align: left;
+}
+
+.eng-pin-card .eng-submit-btn {
+  width: 100%;
+  margin: 0;
+}
+
+/* ================================================================
+   CERTIFICATE FORM
+   ================================================================ */
+
+.cf-wrap {
+  font-family: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* ── Step indicator ── */
+.cf-step-bar {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  background: #fff;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.cf-step-bar::-webkit-scrollbar { display: none; }
+
+.cf-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.85rem 0.75rem 0.7rem;
+  flex: 1;
+  min-width: 70px;
+  border-bottom: 3px solid transparent;
+  transition: border-color 0.15s;
+}
+
+.cf-step--active {
+  border-bottom-color: #F4EA03;
+}
+
+.cf-step-dot {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  background: #e2e8f0;
+  color: #94a3b8;
+  transition: background 0.15s, color 0.15s;
+}
+
+.cf-step--active .cf-step-dot {
+  background: #3D3431;
+  color: #F4EA03;
+}
+
+.cf-step--done .cf-step-dot {
+  background: #F4EA03;
+  color: #3D3431;
+}
+
+.cf-step-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  color: #94a3b8;
+  text-align: center;
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.cf-step--active .cf-step-label { color: #3D3431; }
+.cf-step--done .cf-step-label { color: #3D3431; }
+
+/* ── Form panel override for new form ── */
+.cf-wrap .form-panel {
+  max-height: none;
+  overflow-y: visible;
+  border: none;
+  background: #fff;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.cf-wrap .form-panel h2 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #3D3431;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid #F4EA03;
+  display: inline-block;
+}
+
+/* ── Certificate form fields ── */
+.cf-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-bottom: 0.85rem;
+}
+
+.cf-field label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.cf-field input,
+.cf-field select,
+.cf-field textarea {
+  width: 100%;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 0.65rem 0.85rem;
+  font-size: 0.9rem;
+  font-family: inherit;
+  color: #1a1a1a;
+  background: #fff;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.cf-field input:focus,
+.cf-field select:focus,
+.cf-field textarea:focus {
+  outline: none;
+  border-color: #3D3431;
+  box-shadow: 0 0 0 3px rgba(61, 52, 49, 0.08);
+}
+
+.cf-field input::placeholder { color: #94a3b8; }
+
+.cf-readonly {
+  background: #f8fafc !important;
+  color: #94a3b8 !important;
+  cursor: not-allowed;
+}
+
+.cf-field select:disabled {
+  background: #f8fafc;
+  color: #94a3b8;
+  cursor: not-allowed;
+}
+
+.cf-field textarea {
+  resize: vertical;
+  min-height: 72px;
+}
+
+/* ── 2-column grid inside form ── */
+.cf-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+/* ── Appliance cards ── */
+.appliance-card {
+  background: #f8fafc;
+  border-radius: 10px;
+  border-left: 4px solid #F4EA03;
+  padding: 1.1rem 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.appliance-card-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #3D3431;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem;
+}
+
+/* ── Tick / radio group ── */
+.tick-group {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.tick-option {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #3D3431;
+}
+
+.tick-option input[type="radio"] {
+  display: none;
+}
+
+.tick-mark {
+  width: 28px;
+  height: 28px;
+  border: 2px solid #e2e8f0;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #3D3431;
+  background: #fff;
+  transition: background 0.1s, border-color 0.1s;
+}
+
+.tick-mark--active {
+  background: #F4EA03;
+  border-color: #3D3431;
+}
+
+/* ── Navigation buttons ── */
+.cf-nav {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid #f1f5f9;
+}
+
+.cf-nav .eng-btn-primary {
+  margin-left: auto;
+}
+
+.cf-nav--review {
+  justify-content: space-between;
+}
+
+.cf-nav--review .eng-submit-btn {
+  width: auto;
+  margin: 0;
+  padding: 0.7rem 1.75rem;
+  font-size: 0.95rem;
+}
+
+/* Ghost button in form context (dark bg → light context override) */
+.cf-nav .eng-btn-ghost {
+  color: #3D3431;
+  border-color: #e2e8f0;
+}
+
+.cf-nav .eng-btn-ghost:hover {
+  background: #f1f5f9;
+  border-color: #3D3431;
+}
+
+/* ── Review step ── */
+.review-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.review-container h2 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #3D3431;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid #F4EA03;
+  display: inline-block;
+  margin-bottom: 0.5rem;
+}
+
+.review-section-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0.5rem 0 0.25rem;
+}
+
+.review-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 0.75rem;
+  background: #f8fafc;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  border-left: 4px solid #F4EA03;
+}
+
+.review-summary div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.review-summary span {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.review-summary strong {
+  font-size: 0.9rem;
+  color: #1e293b;
+}
+
+.review-appliance {
+  background: #f8fafc;
+  border-radius: 10px;
+  border-left: 4px solid #3D3431;
+  padding: 1rem 1.25rem;
+}
+
+.review-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 0.6rem;
+  margin-top: 0.75rem;
+}
+
+.review-grid div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.review-grid span {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.review-grid strong {
+  font-size: 0.85rem;
+  color: #1e293b;
+  font-weight: 600;
+}
+
+/* ── Certificate page layout ── */
+.certificate-page {
+  background: #f0f2f5;
+  min-height: 100vh;
+}
+
+.certificate-topbar {
+  background: #3D3431;
+  padding: 0 1.5rem;
+  height: 58px;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  border-bottom: none;
+}
+
+.certificate-topbar h1 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  padding-bottom: 0;
+}
+
+.certificate-topbar .back-link {
+  color: rgba(255,255,255,0.7);
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+.certificate-topbar .back-link:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+.certificate-form-wrap {
+  max-width: 680px;
+  margin: 1.5rem auto;
+  padding: 0 1.25rem;
+}
+
+.certificate-form-panel {
+  background: #fff;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+}
+
+/* ================================================================
+   RESPONSIVE — ENGINEER PAGES
+   ================================================================ */
+
+@media (max-width: 700px) {
+  .eng-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .eng-field--full {
+    grid-column: 1;
+  }
+
+  .cf-2col {
+    grid-template-columns: 1fr;
+  }
+
+  .eng-welcome-h1 {
+    font-size: 1.1rem;
+  }
+
+  .eng-profile-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .eng-cert-row {
+    flex-wrap: wrap;
+  }
+
+  .eng-cert-detail {
+    width: 100%;
+    order: 2;
+  }
+
+  .eng-cert-ref {
+    order: 1;
+  }
+
+  .eng-cert-actions {
+    order: 3;
+  }
+
+  .cf-step-label {
+    display: none;
+  }
+
+  .cf-step {
+    padding: 0.75rem 0.5rem;
+    min-width: 40px;
+  }
+
+  .eng-topbar-actions .eng-btn-ghost {
+    display: none;
+  }
+
+  .review-summary,
+  .review-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 420px) {
+  .eng-profile-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .review-summary,
+  .review-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 
 /* ================================================================
    LANDING PAGE

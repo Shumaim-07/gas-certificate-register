@@ -42,9 +42,11 @@ export function EditProfilePage() {
   }
 
   return (
-    <div className="page-with-nav">
-      <Link to="/dashboard" className="back-link">← Back to Dashboard</Link>
-      {error && <div className="alert alert-error">{error}</div>}
+    <div className="eng-form-page">
+      <div style={{ maxWidth: 680, width: '100%' }}>
+        <Link to="/dashboard" className="eng-back-link">← Back to Dashboard</Link>
+      </div>
+      {error && <div className="alert alert-error" style={{ maxWidth: 680, width: '100%' }}>{error}</div>}
       <EngineerForm
         data={data}
         onChange={setData}

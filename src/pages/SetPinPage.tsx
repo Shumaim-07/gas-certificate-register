@@ -40,48 +40,57 @@ export function SetPinPage() {
   }
 
   return (
-    <div className="page-center">
-      <div className="page-card auth-card">
-        <div className="page-header">
-          <h1>Create Your Password</h1>
-          <p>
-            User ID: <strong>{userId}</strong> — choose a 4–6 digit password for future logins.
-          </p>
+    <div className="eng-form-page">
+      <div className="eng-pin-card">
+        <div className="eng-pin-icon">
+          <svg width="32" height="32" viewBox="0 0 28 28" fill="none">
+            <rect width="28" height="28" rx="7" fill="#F4EA03" />
+            <polyline points="6,14 11,19 22,9" stroke="#3D3431" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
         </div>
+        <h1 className="eng-pin-title">Create Your Password</h1>
+        <p className="eng-pin-sub">
+          User ID: <strong>{userId}</strong><br />
+          Choose a 4–6 digit password for future logins.
+        </p>
 
         {error && <div className="alert alert-error">{error}</div>}
 
-        <div className="form-grid single-col">
-          <label className="form-field full-width">
-            <span>Password</span>
+        <div className="eng-pin-fields">
+          <div className="eng-field eng-field--full">
+            <label htmlFor="pin-password">Password</label>
             <input
+              id="pin-password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               maxLength={6}
               inputMode="numeric"
               autoComplete="new-password"
+              placeholder="4–6 digits"
             />
-          </label>
-          <label className="form-field full-width">
-            <span>Confirm Password</span>
+          </div>
+          <div className="eng-field eng-field--full">
+            <label htmlFor="pin-confirm">Confirm Password</label>
             <input
+              id="pin-confirm"
               type="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               maxLength={6}
               inputMode="numeric"
               autoComplete="new-password"
+              placeholder="Repeat digits"
             />
-          </label>
+          </div>
         </div>
 
-        <button type="button" className="primary-btn" onClick={handleSubmit} disabled={loading}>
+        <button type="button" className="eng-submit-btn" onClick={handleSubmit} disabled={loading}>
           {loading ? 'Saving…' : 'Save Password & Continue'}
         </button>
 
-        <p className="auth-footer">
-          <Link to="/login">← Back to Login</Link>
+        <p style={{ textAlign: 'center', marginTop: '1rem', fontSize: '0.85rem' }}>
+          <Link to="/login" className="eng-back-link">← Back to Login</Link>
         </p>
       </div>
     </div>
