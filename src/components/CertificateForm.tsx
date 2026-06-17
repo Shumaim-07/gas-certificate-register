@@ -62,8 +62,8 @@ export function CertificateForm({ data, onChange, onPrint, saving }: Certificate
       // For other types, set appropriate flue type
       appliance.flueType = flueMap[value] || "";
       // Only reset if they were NA (clear them so user can select)
-      if (appliance.visualFlueCondition === "NA") appliance.visualFlueCondition = "";
-      if (appliance.flueOperationChecks === "NA") appliance.flueOperationChecks = "";
+      if (appliance.visualFlueCondition === "NA") appliance.visualFlueCondition = undefined;
+      if (appliance.flueOperationChecks === "NA") appliance.flueOperationChecks = undefined;
       if (appliance.combustionReading === "NA") appliance.combustionReading = "";
     }
   }
