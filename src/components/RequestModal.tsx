@@ -33,7 +33,7 @@ export function RequestModal({ onClose }: { onClose: () => void }) {
             <h2>Request sent!</h2>
             <p>
               We've received your request. Our team will create your account
-              and send your login details to <strong>{email}</strong>.
+              and send your login details to <strong>{email}</strong> in 24 hours.
             </p>
             <button className="lp-btn-dark" onClick={onClose} style={{ marginTop: '1.5rem' }}>
               Done
