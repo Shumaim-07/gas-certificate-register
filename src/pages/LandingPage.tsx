@@ -105,7 +105,7 @@ export function LandingPage() {
               UK GAS SAFE COMPATIBLE
             </span>
             <h1 className="lp-hero-title">
-              Gas Safety..
+              Gas Safety
               <br />
               Certificates, <span className="lp-mark">issued</span>
               <br />
