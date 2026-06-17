@@ -46,25 +46,31 @@ export function CertificateForm({ data, onChange, onPrint, saving }: Certificate
     onChange(updated);
   };
 
-  const updateAppliance = (index: number, field: keyof Appliance, value: any) => {
-    const updatedAppliances = [...data.appliances];
-    const appliance = { ...updatedAppliances[index], [field]: value };
+ const updateAppliance = (index: number, field: keyof Appliance, value: any) => {
+  const updatedAppliances = [...data.appliances];
+  const appliance = { ...updatedAppliances[index], [field]: value };
 
-    if (field === "type") {
+  if (field === "type") {
+    // Set flue type based on selection
+    if (value === "HOB") {
+      appliance.flueType = "FL";
+      // Force NA for these fields
+      appliance.visualFlueCondition = "NA";
+      appliance.flueOperationChecks = "NA";
+      appliance.combustionReading = "NA";
+    } else {
+      // For other types, set appropriate flue type
       appliance.flueType = flueMap[value] || "";
-      if (value === "HOB") {
-        appliance.visualFlueCondition = "NA";
-        appliance.flueOperationChecks = "NA";
-        appliance.combustionReading = "NA";
-      } else {
-        if (appliance.visualFlueCondition === "NA") appliance.visualFlueCondition = undefined;
-        if (appliance.flueOperationChecks === "NA") appliance.flueOperationChecks = undefined;
-        if (appliance.combustionReading === "NA") appliance.combustionReading = undefined;
-      }
+      // Only reset if they were NA (clear them so user can select)
+      if (appliance.visualFlueCondition === "NA") appliance.visualFlueCondition = "";
+      if (appliance.flueOperationChecks === "NA") appliance.flueOperationChecks = "";
+      if (appliance.combustionReading === "NA") appliance.combustionReading = "";
     }
-    updatedAppliances[index] = appliance;
-    onChange({ ...data, appliances: updatedAppliances });
-  };
+  }
+  
+  updatedAppliances[index] = appliance;
+  onChange({ ...data, appliances: updatedAppliances });
+};
 
   return (
     <div className="cf-wrap">
