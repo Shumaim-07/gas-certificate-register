@@ -62,8 +62,7 @@ function AppRoutes() {
       <Route path="/certificate/:id" element={<EngineerGuard><CertificatePage /></EngineerGuard>} />
 
       <Route path="*" element={<Navigate to="/" replace />} />
-      <Route path="/admin-demo" element={<AdminDashboardPage />} />
-    </Routes>
+      </Routes>
   )
 }
 
