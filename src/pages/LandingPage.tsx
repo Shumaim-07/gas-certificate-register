@@ -79,20 +79,20 @@ export function LandingPage() {
           </div>
 
           <div className="lp-nav-actions">
-            <button
-              type="button"
-              className="lp-nav-login lp-nav-request"
-              onClick={() => setShowRequestModal(true)}
-            >
-              Request access
-            </button>
-            <Link to="/login" className="lp-nav-login">
-              Log in
-            </Link>
-            <Link to="/login" className="lp-nav-cta">
-              Get started
-            </Link>
-          </div>
+  <Link to="/login" className="lp-nav-login">
+    Log in
+  </Link>
+  <Link 
+    to="#" 
+    className="lp-nav-cta"
+    onClick={(e) => {
+      e.preventDefault();
+      setShowRequestModal(true);
+    }}
+  >
+    Get started
+  </Link>
+</div>
         </div>
       </nav>
 
