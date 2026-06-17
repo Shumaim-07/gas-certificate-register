@@ -4,6 +4,7 @@ import { api } from '../api'
 
 export function RequestModal({ onClose }: { onClose: () => void }) {
   const [name, setName] = useState('')
+  const [gasSafeNumber, setGasSafeNumber] = useState('')
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'duplicate' | 'error'>('idle')
   const [errorMsg, setErrorMsg] = useState('')
@@ -13,7 +14,7 @@ export function RequestModal({ onClose }: { onClose: () => void }) {
     setStatus('loading')
     setErrorMsg('')
     try {
-      const res = await api.submitJoinRequest(email, name)
+      const res = await api.submitJoinRequest(email, name, gasSafeNumber)
       setStatus(res.message === 'already_submitted' ? 'duplicate' : 'success')
     } catch (err) {
       setErrorMsg(err instanceof Error ? err.message : 'Something went wrong. Please try again.')
@@ -59,14 +60,14 @@ export function RequestModal({ onClose }: { onClose: () => void }) {
               </span>
               <h2>Request to join as an engineer</h2>
               <p>
-                Enter your email below and we'll create your account and send
+                Enter your details below and we'll create your account and send
                 you your login details.
               </p>
             </div>
             <form onSubmit={handleSubmit} className="req-modal-form">
               <div className="req-field">
                 <label htmlFor="req-name">
-                  Your name <span className="req-optional">(optional)</span>
+                  Full name <span className="req-required">*</span>
                 </label>
                 <input
                   id="req-name"
@@ -74,7 +75,21 @@ export function RequestModal({ onClose }: { onClose: () => void }) {
                   placeholder="e.g. James Whitmore"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
+                  required
                   autoComplete="name"
+                />
+              </div>
+              <div className="req-field">
+                <label htmlFor="req-gas-safe">
+                  Gas Safe number <span className="req-required">*</span>
+                </label>
+                <input
+                  id="req-gas-safe"
+                  type="text"
+                  placeholder="e.g. 512887"
+                  value={gasSafeNumber}
+                  onChange={(e) => setGasSafeNumber(e.target.value)}
+                  required
                 />
               </div>
               <div className="req-field">

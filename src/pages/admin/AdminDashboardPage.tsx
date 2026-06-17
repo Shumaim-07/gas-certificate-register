@@ -4,7 +4,9 @@ import { api } from '../../api'
 import { useAuth } from '../../context/AuthContext'
 import type { EngineerProfile } from '../../types'
 
-type JoinRequest = { id: string; email: string; name: string; createdAt: string }
+type JoinRequest = {
+  gasSafeNumber: string; id: string; email: string; name: string; createdAt: string 
+}
 
 export function AdminDashboardPage() {
   const { adminUsername, logout } = useAuth()
@@ -70,57 +72,60 @@ export function AdminDashboardPage() {
       {error && <div className="alert alert-error">{error}</div>}
 
       {/* ── Join Requests ── */}
-      {(requestsLoading || joinRequests.length > 0) && (
-        <section className="certificates-section" style={{ marginBottom: '2rem' }}>
-          <h2 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            Engineer Join Requests
-            {joinRequests.length > 0 && (
-              <span className="req-badge-count">{joinRequests.length}</span>
-            )}
-          </h2>
-          {requestsLoading ? (
-            <p className="muted">Loading…</p>
-          ) : (
-            <div className="cert-table-wrap">
-              <table className="cert-table">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Requested</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {joinRequests.map((req) => (
-                    <tr key={req.id}>
-                      <td>{req.name || <span className="muted">—</span>}</td>
-                      <td><strong>{req.email}</strong></td>
-                      <td>{new Date(req.createdAt).toLocaleDateString('en-GB')}</td>
-                      <td className="table-actions">
-                        <Link
-                          to="/admin/engineers/new"
-                          className="link-btn"
-                          style={{ color: '#15803d' }}
-                        >
-                          Create ID
-                        </Link>
-                        <button
-                          type="button"
-                          className="link-btn danger"
-                          onClick={() => handleDismissRequest(req.id)}
-                        >
-                          Dismiss
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
-        </section>
+      {/* ── Join Requests ── */}
+{(requestsLoading || joinRequests.length > 0) && (
+  <section className="certificates-section" style={{ marginBottom: '2rem' }}>
+    <h2 style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+      Engineer Join Requests
+      {joinRequests.length > 0 && (
+        <span className="req-badge-count">{joinRequests.length}</span>
       )}
+    </h2>
+    {requestsLoading ? (
+      <p className="muted">Loading…</p>
+    ) : (
+      <div className="cert-table-wrap">
+        <table className="cert-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Gas Safe Number</th>
+              <th>Requested</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {joinRequests.map((req) => (
+              <tr key={req.id}>
+                <td>{req.name || <span className="muted">—</span>}</td>
+                <td><strong>{req.email}</strong></td>
+                <td>{req.gasSafeNumber || <span className="muted">—</span>}</td>
+                <td>{new Date(req.createdAt).toLocaleDateString('en-GB')}</td>
+                <td className="table-actions">
+                  <Link
+                    to="/admin/engineers/new"
+                    className="link-btn"
+                    style={{ color: '#15803d' }}
+                  >
+                    Create ID
+                  </Link>
+                  <button
+                    type="button"
+                    className="link-btn danger"
+                    onClick={() => handleDismissRequest(req.id)}
+                  >
+                    Dismiss
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    )}
+  </section>
+)}
 
       <section className="certificates-section">
         <h2>Engineer User IDs</h2>

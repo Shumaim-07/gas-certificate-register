@@ -152,15 +152,13 @@ export const api = {
   adminDeleteEngineer: (id: string) =>
     request<void>(`/admin/engineers/${id}`, { method: 'DELETE' }),
 
-  submitJoinRequest: (email: string, name: string) =>
-    request<{ message: string }>('/requests', {
-      method: 'POST',
-      body: JSON.stringify({ email, name }),
-    }),
-
+  submitJoinRequest: (email: string, name: string, gasSafeNumber: string) =>
+  request<{ message: string }>('/requests', {
+    method: 'POST',
+    body: JSON.stringify({ email, name, gasSafeNumber }),
+  }),
   adminGetJoinRequests: () =>
-    request<{ id: string; email: string; name: string; createdAt: string }[]>('/requests'),
-
-  adminDismissJoinRequest: (id: string) =>
+  request<{ id: string; email: string; name: string; gasSafeNumber: string; createdAt: string }[]>('/requests'),
+adminDismissJoinRequest: (id: string) =>
     request<void>(`/requests/${id}`, { method: 'DELETE' }),
 }
