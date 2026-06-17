@@ -150,7 +150,7 @@ export const emptyCertificateData = (): CertificateData => {
       {
         location: '',
         type: 'HOB',
-        flueType: '',
+        flueType: 'FL',
 
         manufacturer: '',
         model: '',
@@ -162,9 +162,9 @@ export const emptyCertificateData = (): CertificateData => {
         operatingPressure: '',
         safetyDevice: 'PASS',
         ventilation: 'YES',
-        visualFlueCondition: 'PASS',
-        flueOperationChecks: 'PASS',
-        combustionReading: '',
+        visualFlueCondition: 'NA',
+        flueOperationChecks: 'NA',
+        combustionReading: 'NA',
         applianceServiced: 'YES',
         coAlarmFitted: 'YES',
         coAlarmTested: 'PASS',

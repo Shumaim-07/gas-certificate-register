@@ -233,10 +233,24 @@ export function CertificateForm({ data, onChange, onPrint, saving }: Certificate
                   const count = Number(e.target.value);
                   const newAppliances = Array.from({ length: count }, (_, i) =>
                     data.appliances?.[i] || {
-                      location: "", type: "HOB", manufacturer: "", model: "",
-                      serialNumber: "", ownedBy: "YES", inspected: "NO", flueType: "",
-                      gasPipeworkVisual: "PASS", gasSupplyPipeworkVisual: "PASS",
-                      ecvAccess: "PASS", tightnessTest: "PASS", equipotentialBonding: "PASS",
+                      location: "", type: "HOB" as const, manufacturer: "", model: "",
+                      serialNumber: "", ownedBy: "YES" as const, inspected: "YES" as const,
+                      flueType: "FL",
+                      operatingPressure: "",
+                      safetyDevice: "PASS" as const,
+                      ventilation: "YES" as const,
+                      visualFlueCondition: "NA" as const,
+                      flueOperationChecks: "NA" as const,
+                      combustionReading: "NA",
+                      applianceServiced: "YES" as const,
+                      coAlarmFitted: "YES" as const,
+                      coAlarmTested: "PASS" as const,
+                      safeToUse: "YES" as const,
+                      safetyDefect: "",
+                      giuspClassification: "",
+                      warningRecordSerial: "",
+                      remedialAction: "",
+                      workDetails: "",
                     }
                   );
                   onChange({ ...data, applianceCount: count, appliances: newAppliances });
@@ -626,8 +640,11 @@ export function CertificateForm({ data, onChange, onPrint, saving }: Certificate
                   <div><span>CO Alarm Fitted</span><strong>{appliance.coAlarmFitted}</strong></div>
                   <div><span>CO Alarm Tested</span><strong>{appliance.coAlarmTested}</strong></div>
                   <div><span>Safe to Use</span><strong>{appliance.safeToUse}</strong></div>
-                  {appliance.safetyDefect && <div><span>Safety Defect</span><strong>{appliance.safetyDefect}</strong></div>}
-                  {appliance.remedialAction && <div><span>Remedial Action</span><strong>{appliance.remedialAction}</strong></div>}
+                  <div><span>Safety Defect</span><strong>{appliance.safetyDefect || "—"}</strong></div>
+                  <div><span>GIUSP Classification</span><strong>{appliance.giuspClassification || "—"}</strong></div>
+                  <div><span>Warning Record Serial</span><strong>{appliance.warningRecordSerial || "—"}</strong></div>
+                  <div><span>Remedial Action</span><strong>{appliance.remedialAction || "—"}</strong></div>
+                  <div><span>Work Details</span><strong>{appliance.workDetails || "—"}</strong></div>
                 </div>
               </div>
             ))}
