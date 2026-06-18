@@ -162,8 +162,8 @@ export async function generateCertificatePdf(
       
       // Get position from config
       const sigConfig = fieldPositions.find((f) => f.key === "engineerSignature");
-      const sigXPercent = sigConfig?.x ?? 66;
-      const sigYPercent = sigConfig?.y ?? 84;
+      const sigXPercent = sigConfig?.x ?? 67;
+      const sigYPercent = sigConfig?.y ?? 85;
       const sigWidthPercent = sigConfig?.width ?? 12;
 
       const dataUrl = data.engineerSignature;
@@ -181,7 +181,7 @@ export async function generateCertificatePdf(
           : await pdfDoc.embedPng(bytes);
 
       // Use config values
-      const sigWidth = (sigWidthPercent / 160) * width;
+      const sigWidth = (sigWidthPercent / 165) * width;
       const sigHeight = sigImage.height * (sigWidth / sigImage.width);
       const sigX = (sigXPercent / 100) * width;
       const sigY = height - (sigYPercent / 100) * height - sigHeight;
