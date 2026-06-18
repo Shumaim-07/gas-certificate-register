@@ -225,7 +225,7 @@ export const inspectionTickPositions = {
   },
 
   ecvAccess: {
-    PASS: { x: 32, y: 90.5 },
+    PASS: { x: 34, y: 90.5 },
     FAIL: { x: 35, y: 90.5 },
     NA: { x: 38, y: 90.5 },
   },
@@ -237,7 +237,7 @@ export const inspectionTickPositions = {
   },
 
   equipotentialBonding: {
-    PASS: { x: 32, y: 94.5 },
+    PASS: { x: 34, y: 94.5 },
     FAIL: { x: 35, y: 94.5 },
     NA: { x: 38, y: 94.5 },
   },
