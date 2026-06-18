@@ -74,6 +74,7 @@ export async function generateCertificatePdf(
   }
 
   for (const field of fieldPositions) {
+    if (field.key === 'engineerSignature' || field.key === 'receiverSignature') continue;
     const text = getFieldValue(data, field.key);
     if (!text) continue;
 
