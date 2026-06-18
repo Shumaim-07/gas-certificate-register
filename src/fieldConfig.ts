@@ -211,11 +211,19 @@ export const fieldPositions: FieldPosition[] = [
   width: 30,
 },
 {
-    key: 'applianceCount',  
+    key: 'applianceCount',
     label: 'Appliance Count',
-    x: 20,                 
-    y: 79.5,               
+    x: 20,
+    y: 79.5,
     width: 10,
+    fontSize: 9,
+  },
+  {
+    key: 'receiverSignature',
+    label: 'Receiver Signature',
+    x: 60,
+    y: 91,
+    width: 12,
     fontSize: 9,
   },
 ]

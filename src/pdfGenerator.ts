@@ -159,8 +159,6 @@ export async function generateCertificatePdf(
 
   if (data.engineerSignature) {
     try {
-      
-      // Get position from config
       const sigConfig = fieldPositions.find((f) => f.key === "engineerSignature");
       const sigXPercent = sigConfig?.x ?? 67;
       const sigYPercent = sigConfig?.y ?? 84.3;
@@ -180,7 +178,6 @@ export async function generateCertificatePdf(
           ? await pdfDoc.embedJpg(bytes)
           : await pdfDoc.embedPng(bytes);
 
-      // Use config values
       const sigWidth = (sigWidthPercent / 165) * width;
       const sigHeight = sigImage.height * (sigWidth / sigImage.width);
       const sigX = (sigXPercent / 100) * width;
@@ -193,7 +190,62 @@ export async function generateCertificatePdf(
         height: sigHeight,
       });
     } catch (error) {
-      console.error("Failed to embed signature:", error);
+      console.error("Failed to embed engineer signature:", error);
+    }
+  }
+
+  if (data.receiverSignature) {
+    const recConfig = fieldPositions.find((f) => f.key === "receiverSignature");
+    const recXPercent = recConfig?.x ?? 60;
+    const recYPercent = recConfig?.y ?? 91;
+    const recWidthPercent = recConfig?.width ?? 12;
+    const recFontSize = recConfig?.fontSize ?? 9;
+
+    if (data.receiverSignature === "ONLINE") {
+      try {
+        const italicFont = await pdfDoc.embedFont(StandardFonts.HelveticaOblique);
+        const recX = (recXPercent / 100) * width;
+        const recY = height - (recYPercent / 100) * height - recFontSize;
+        page.drawText("ONLINE", {
+          x: recX,
+          y: recY,
+          size: recFontSize,
+          font: italicFont,
+          color: rgb(0, 0, 0),
+        });
+      } catch (error) {
+        console.error("Failed to draw ONLINE text:", error);
+      }
+    } else {
+      try {
+        const dataUrl = data.receiverSignature;
+        const mimeType = dataUrl.split(";")[0].split(":")[1];
+        const base64 = dataUrl.split(",")[1];
+        const binary = atob(base64);
+        const bytes = new Uint8Array(binary.length);
+        for (let i = 0; i < binary.length; i++) {
+          bytes[i] = binary.charCodeAt(i);
+        }
+
+        const recImage =
+          mimeType === "image/jpeg" || mimeType === "image/jpg"
+            ? await pdfDoc.embedJpg(bytes)
+            : await pdfDoc.embedPng(bytes);
+
+        const recWidth = (recWidthPercent / 165) * width;
+        const recHeight = recImage.height * (recWidth / recImage.width);
+        const recX = (recXPercent / 100) * width;
+        const recY = height - (recYPercent / 100) * height - recHeight;
+
+        page.drawImage(recImage, {
+          x: recX,
+          y: recY,
+          width: recWidth,
+          height: recHeight,
+        });
+      } catch (error) {
+        console.error("Failed to embed receiver signature:", error);
+      }
     }
   }
 

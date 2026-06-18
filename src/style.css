@@ -1202,6 +1202,26 @@ a {
   object-fit: contain;
 }
 
+/* ── Receiver signature section ── */
+.review-receiver-sig {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1.5px solid #e5e7eb;
+}
+
+.sig-online-area {
+  padding: 1rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sig-online-text {
+  font-size: 1.1rem;
+  color: #1a1a2e;
+  margin: 0.25rem 0;
+}
+
 /* ── Set PIN card ── */
 .eng-pin-card {
   background: #fff;

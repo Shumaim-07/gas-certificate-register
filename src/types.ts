@@ -107,6 +107,7 @@ export interface CertificateData {
   contactNumber: string
 
   engineerSignature?: string
+  receiverSignature?: string
 
   /* Certificate extras */
   propertyAddress: string
@@ -192,6 +193,7 @@ export const emptyCertificateData = (): CertificateData => {
     contactNumber: '',
 
     engineerSignature: '',
+    receiverSignature: '',
 
     propertyAddress: '',
     tenantName: '',

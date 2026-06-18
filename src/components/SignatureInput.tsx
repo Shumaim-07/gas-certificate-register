@@ -8,7 +8,7 @@ interface SignatureInputProps {
 const MAX_FILE_SIZE = 1024 * 1024 // 1 MB
 
 export function SignatureInput({ value, onChange }: SignatureInputProps) {
-  const [tab, setTab] = useState<'draw' | 'upload'>('draw')
+  const [tab, setTab] = useState<'draw' | 'upload' | 'online'>('draw')
   const [uploadError, setUploadError] = useState<string | null>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const isDrawing = useRef(false)
@@ -128,6 +128,13 @@ export function SignatureInput({ value, onChange }: SignatureInputProps) {
         >
           Upload Image
         </button>
+        <button
+          type="button"
+          className={`sig-tab${tab === 'online' ? ' sig-tab--active' : ''}`}
+          onClick={() => { setTab('online'); onChange('ONLINE') }}
+        >
+          Not Available
+        </button>
       </div>
 
       {tab === 'draw' && (
@@ -167,7 +174,17 @@ export function SignatureInput({ value, onChange }: SignatureInputProps) {
         </div>
       )}
 
-      {value && (
+      {tab === 'online' && (
+        <div className="sig-online-area">
+          <p className="sig-hint">No signature available — the following will appear on the certificate:</p>
+          <p className="sig-online-text"><em>ONLINE</em></p>
+          <button type="button" className="sig-clear-btn" onClick={() => { setTab('draw'); onChange('') }}>
+            Cancel
+          </button>
+        </div>
+      )}
+
+      {value && value !== 'ONLINE' && (
         <div className="sig-preview">
           <p className="sig-preview-label">Current signature:</p>
           <img src={value} alt="Signature" className="sig-preview-img" />

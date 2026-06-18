@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { CertificateData, Appliance } from "../types";
 import { generateCertificateRef } from "../utils/generateCertificateRef";
+import { SignatureInput } from "./SignatureInput";
 
 interface CertificateFormProps {
   data: CertificateData;
@@ -651,6 +652,17 @@ export function CertificateForm({ data, onChange, onPrint, saving }: Certificate
                 </div>
               </div>
             ))}
+
+            <div className="review-receiver-sig">
+              <h3 className="review-section-title">Received By — Customer Signature</h3>
+              <p className="sig-hint" style={{ marginBottom: '0.75rem' }}>
+                The person receiving the certificate can draw, upload (max 1 MB), or mark as Not Available.
+              </p>
+              <SignatureInput
+                value={data.receiverSignature}
+                onChange={(val) => updateField('receiverSignature', val)}
+              />
+            </div>
 
             <div className="cf-nav cf-nav--review">
               <button className="eng-btn-ghost" onClick={() => setStep(6)}>← Edit</button>
