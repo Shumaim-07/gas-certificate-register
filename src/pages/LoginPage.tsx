@@ -151,6 +151,7 @@ export function LoginPage() {
             </button>
           </div>
         ) : (
+          <>
         <div className="login-card">
           <h2 className="login-card-h2">Log in</h2>
           <p className="login-card-sub">Engineer &amp; admin access.</p>
@@ -233,6 +234,7 @@ export function LoginPage() {
         <p className="login-footer-note">
           Protected sign-in. Only Gas Safe registered engineers can issue certificates.
         </p>
+          </>
         )}
       </div>
     </div>

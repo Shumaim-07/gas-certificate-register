@@ -209,7 +209,7 @@ export const emptyCertificateData = (): CertificateData => {
 
 export type EngineerFormData = Omit<
   EngineerProfile,
-  'id' | 'userId' | 'pinSet' | 'profileComplete' | 'createdAt' | 'updatedAt'
+  'id' | 'userId' | 'pinSet' | 'profileComplete' | 'createdAt' | 'updatedAt' | 'frozen' | 'freezeReason'
 >
 
 export const emptyEngineerData = (): EngineerFormData => ({
