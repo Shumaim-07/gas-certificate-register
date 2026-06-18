@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { api } from '../api'
+import { Loader } from '../components/Loader'
 import { useAuth } from '../context/AuthContext'
 import type { SavedCertificate } from '../types'
 
@@ -89,7 +90,7 @@ export function DashboardPage() {
           </div>
 
           {loading ? (
-            <p className="muted" style={{ padding: '1.5rem 0' }}>Loading certificates…</p>
+            <Loader text="Loading certificates…" />
           ) : certificates.length === 0 ? (
             <div className="eng-empty">
               <p>No certificates yet — create your first one.</p>

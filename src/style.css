@@ -3847,3 +3847,105 @@ html {
   background: #f1f5f9;
   border-color: #94a3b8;
 }
+
+/* ================================================================
+   LOADER
+   ================================================================ */
+
+/* Full-page loader — covers the whole viewport */
+.loader-fullpage {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f0f2f5;
+  font-family: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Inline loader — drops into any container */
+.loader-inline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  font-family: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Shared inner wrapper */
+.loader-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* Spinner ring + logo mark */
+.loader-visual {
+  position: relative;
+  width: 72px;
+  height: 72px;
+}
+
+.loader-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 3.5px solid #e2e8f0;
+  border-top-color: #3D3431;
+  border-right-color: #F4EA03;
+  animation: loader-spin 0.85s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Second ring for depth */
+.loader-ring::after {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  border-bottom-color: #F4EA03;
+  opacity: 0.45;
+  animation: loader-spin 1.4s linear infinite reverse;
+}
+
+.loader-logo {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: loader-pulse 1.7s ease-in-out infinite;
+}
+
+@keyframes loader-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes loader-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.75; transform: scale(0.92); }
+}
+
+/* Text block */
+.loader-label-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  text-align: center;
+}
+
+.loader-brand {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #3D3431;
+}
+
+.loader-text {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #94a3b8;
+  letter-spacing: 0.01em;
+}

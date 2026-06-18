@@ -1,6 +1,7 @@
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { api } from '../api'
 import { CertificateForm } from '../components/CertificateForm'
+import { Loader } from '../components/Loader'
 import { useAuth } from '../context/AuthContext'
 import { downloadCertificatePdf } from '../pdfGenerator'
 import { certificateFromEngineer, emptyCertificateData, type CertificateData } from '../types'
@@ -62,7 +63,7 @@ export function CertificatePage() {
   }
 
   if (loading) {
-    return <div className="page-center"><p className="muted">Loading certificate…</p></div>
+    return <Loader text="Loading certificate…" fullPage />
   }
 
   if (isLocked) {
