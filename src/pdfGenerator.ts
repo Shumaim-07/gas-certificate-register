@@ -280,27 +280,23 @@ export async function printCertificatePdf(
 }
 
 function generateFileName(data: CertificateData): string {
-  const address = (data.siteHouseAddress || "").toUpperCase();
+  const address = (data.siteHouseAddress || "")
+    .trim()
+    .toUpperCase()
+    .replace(/[^A-Z0-9 ]/g, "")
+    .replace(/\s+/g, "-");
 
-  // door number
-  const doorNumberMatch = address.match(/^\d+/);
-  const doorNumber = doorNumberMatch ? doorNumberMatch[0] : "000";
+  const postcode = (data.sitePostCode || "")
+    .trim()
+    .toUpperCase()
+    .replace(/\s+/g, "");
 
-  // postcode
-  const postcodeMatch = address.match(/[A-Z]{1,2}\d[A-Z\d]?\s*\d[A-Z]{2}/i);
+  const d = new Date(data.issueDate + "T00:00:00");
+  const month = d.toLocaleString("en-GB", { month: "long" });
+  const year = d.getFullYear();
 
-  const postcode = postcodeMatch
-    ? postcodeMatch[0].replace(/\s/g, "")
-    : "UNKNOWN";
-
-  // date (DDMMYYYY)
-  const d = new Date(data.issueDate);
-  const ddmmyyyy =
-    String(d.getDate()).padStart(2, "0") +
-    String(d.getMonth() + 1).padStart(2, "0") +
-    d.getFullYear();
-
-  return `GAS-${doorNumber}-${postcode}-${ddmmyyyy}.pdf`;
+  const parts = [address, postcode || "UNKNOWN", `${month}-${year}`].filter(Boolean);
+  return `GAS-${parts.join("-")}.pdf`;
 }
 /* =========================
    DOWNLOAD (FIXED FILENAME)
