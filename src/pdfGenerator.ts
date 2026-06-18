@@ -46,12 +46,33 @@ function getFieldValue(
   return value as string;
 }
 
+function generateFileName(data: CertificateData): string {
+  const address = (data.siteHouseAddress || "")
+    .trim()
+    .toUpperCase()
+    .replace(/[^A-Z0-9 ]/g, "")
+    .replace(/\s+/g, "-");
+
+  const postcode = (data.sitePostCode || "")
+    .trim()
+    .toUpperCase()
+    .replace(/\s+/g, "");
+
+  const d = new Date(data.issueDate + "T00:00:00");
+  const month = d.toLocaleString("en-GB", { month: "long" });
+  const year = d.getFullYear();
+
+  const parts = [address, postcode || "UNKNOWN", `${month}-${year}`].filter(Boolean);
+  return `GAS-${parts.join("-")}.pdf`;
+}
+
 export async function generateCertificatePdf(
   data: CertificateData,
 ): Promise<Uint8Array> {
   const templateBytes = await loadTemplate();
 
   const pdfDoc = await PDFDocument.load(templateBytes);
+  pdfDoc.setTitle(generateFileName(data).replace(/\.pdf$/i, ""));
 
   const page = pdfDoc.getPages()[0];
 
@@ -279,25 +300,6 @@ export async function printCertificatePdf(
   setTimeout(() => URL.revokeObjectURL(url), 60000);
 }
 
-function generateFileName(data: CertificateData): string {
-  const address = (data.siteHouseAddress || "")
-    .trim()
-    .toUpperCase()
-    .replace(/[^A-Z0-9 ]/g, "")
-    .replace(/\s+/g, "-");
-
-  const postcode = (data.sitePostCode || "")
-    .trim()
-    .toUpperCase()
-    .replace(/\s+/g, "");
-
-  const d = new Date(data.issueDate + "T00:00:00");
-  const month = d.toLocaleString("en-GB", { month: "long" });
-  const year = d.getFullYear();
-
-  const parts = [address, postcode || "UNKNOWN", `${month}-${year}`].filter(Boolean);
-  return `GAS-${parts.join("-")}.pdf`;
-}
 /* =========================
    DOWNLOAD (FIXED FILENAME)
 ========================= */
