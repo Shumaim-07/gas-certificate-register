@@ -205,7 +205,7 @@ export async function generateCertificatePdf(
     if (data.receiverSignature === "ONLINE") {
       try {
         const italicFont = await pdfDoc.embedFont(StandardFonts.HelveticaOblique);
-        const recX = (recXPercent / 100) * width;
+        const recX = (recXPercent / 125) * width;
         const recY = height - (recYPercent / 100) * height - recFontSize;
         page.drawText("ONLINE", {
           x: recX,
