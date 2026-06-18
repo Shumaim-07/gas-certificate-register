@@ -115,9 +115,9 @@ export interface CertificateData {
   comments: string
   gasPipeworkVisual?: "PASS" | "FAIL" | "NA";
 gasSupplyPipeworkVisual?: "PASS" | "FAIL" | "NA";
-ecvAccess?: "PASS" | "FAIL" | "NA";
+ecvAccess?: "PASS" | "FAIL" ;
 tightnessTest?: "PASS" | "FAIL" | "NA";
-equipotentialBonding?: "PASS" | "FAIL" | "NA";
+equipotentialBonding?: "PASS" | "FAIL";
 }
 
 /* ---------------- EMPTY STATE ---------------- */

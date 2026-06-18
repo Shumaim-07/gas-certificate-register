@@ -469,18 +469,21 @@ export function CertificateForm({ data, onChange, onPrint, saving }: Certificate
 
                 <div className="cf-2col">
                   <div className="cf-field">
-                    <label>Combustion analyser reading</label>
-                    <select
-                      value={appliance.type === "HOB" ? "NA" : appliance.combustionReading || ""}
-                      disabled={appliance.type === "HOB"}
-                      onChange={(e) => updateAppliance(index, "combustionReading", e.target.value)}
-                    >
-                      <option value="">Select</option>
-                      <option value="PASS">PASS</option>
-                      <option value="FAIL">FAIL</option>
-                      <option value="NA">NA</option>
-                    </select>
-                  </div>
+    <label>Combustion analyser reading</label>
+    <input
+      type="text"
+      placeholder="Enter reading or select NA"
+      value={appliance.type === "HOB" ? "NA" : appliance.combustionReading || ""}
+      disabled={appliance.type === "HOB"}
+      onChange={(e) => updateAppliance(index, "combustionReading", e.target.value)}
+      list="combustion-readings"
+    />
+    <datalist id="combustion-readings">
+      <option value="NA" />
+      <option value="PASS" />
+      <option value="FAIL" />
+    </datalist>
+  </div>
                   <div className="cf-field">
                     <label>Appliance Serviced</label>
                     <select
