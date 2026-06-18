@@ -36,7 +36,11 @@ router.put('/profile', async (req, res) => {
     if (!req.body[field]?.trim()) {
       return res.status(400).json({ error: `${field} is required` })
     }
-   engineer[field] = (req.body[field] || '').toString().trim()
+    engineer[field] = (req.body[field] || '').toString().trim()
+  }
+
+  if (req.body.signature !== undefined) {
+    engineer.signature = req.body.signature || ''
   }
 
   updateProfileComplete(engineer)

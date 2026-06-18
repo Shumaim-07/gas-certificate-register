@@ -1,4 +1,5 @@
 import type { EngineerFormData } from '../types'
+import { SignatureInput } from './SignatureInput'
 
 interface EngineerFormProps {
   data: EngineerFormData
@@ -67,6 +68,15 @@ export function EngineerForm({
             )}
           </div>
         ))}
+      </div>
+
+      <div className="eng-field eng-field--full sig-section">
+        <label>Engineer Signature</label>
+        <p className="sig-section-hint">This signature will appear on generated certificates.</p>
+        <SignatureInput
+          value={data.signature}
+          onChange={(val) => onChange({ ...data, signature: val })}
+        />
       </div>
 
       <button type="button" className="eng-submit-btn" onClick={onSubmit} disabled={saving}>

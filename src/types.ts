@@ -16,6 +16,7 @@ export interface EngineerProfile {
   area: string
   postCode: string
   contactNumber: string
+  signature?: string
 
   profileComplete: boolean
   frozen?: boolean
@@ -105,6 +106,8 @@ export interface CertificateData {
   postCode: string
   contactNumber: string
 
+  engineerSignature?: string
+
   /* Certificate extras */
   propertyAddress: string
   tenantName: string
@@ -188,6 +191,8 @@ export const emptyCertificateData = (): CertificateData => {
     postCode: '',
     contactNumber: '',
 
+    engineerSignature: '',
+
     propertyAddress: '',
     tenantName: '',
     engineerId: '',
@@ -221,6 +226,7 @@ export const emptyEngineerData = (): EngineerFormData => ({
   area: '',
   postCode: '',
   contactNumber: '',
+  signature: '',
 })
 
 /* ---------------- ADMIN ---------------- */
@@ -273,6 +279,7 @@ export function certificateFromEngineer(
     area: engineer.area,
     postCode: engineer.postCode,
     contactNumber: engineer.contactNumber,
+    engineerSignature: engineer.signature ?? '',
   }
 }
 

@@ -23,6 +23,7 @@ export function EditProfilePage() {
         area: engineer.area,
         postCode: engineer.postCode,
         contactNumber: engineer.contactNumber,
+        signature: engineer.signature ?? '',
       })
     }
   }, [engineer])

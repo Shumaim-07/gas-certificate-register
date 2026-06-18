@@ -22,6 +22,7 @@ const engineerSchema = new mongoose.Schema(
     postCode: { type: String, default: "" },
 
     contactNumber: { type: String, default: "" },
+    signature: { type: String, default: "" },
     profileComplete: { type: Boolean, default: false },
 
     frozen: { type: Boolean, default: false },
@@ -43,6 +44,7 @@ export function engineerToJson(doc) {
     area: doc.area,
     postCode: doc.postCode,
     contactNumber: doc.contactNumber,
+    signature: doc.signature ?? '',
     profileComplete: doc.profileComplete,
     frozen: doc.frozen ?? false,
     freezeReason: doc.freezeReason ?? null,

@@ -19,6 +19,7 @@ export function SetupProfilePage() {
       postCode: engineer.postCode,
       contactNumber: engineer.contactNumber,
       area: engineer.area,
+      signature: engineer.signature ?? '',
     }
   })
   const [saving, setSaving] = useState(false)

@@ -1079,6 +1079,129 @@ a {
   cursor: not-allowed;
 }
 
+/* ── Signature Input ── */
+.sig-section {
+  margin-top: 0.5rem;
+}
+.sig-section-hint {
+  font-size: 0.78rem;
+  color: #6b7280;
+  margin: 0.2rem 0 0.75rem;
+}
+.sig-container {
+  border: 1.5px solid #e5e7eb;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fafafa;
+}
+.sig-tabs {
+  display: flex;
+  border-bottom: 1.5px solid #e5e7eb;
+}
+.sig-tab {
+  flex: 1;
+  padding: 0.55rem 1rem;
+  background: transparent;
+  border: none;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: #6b7280;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.sig-tab--active {
+  background: #fff;
+  color: #1a1a2e;
+  border-bottom: 2px solid #1a1a2e;
+}
+.sig-draw-area {
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+.sig-canvas {
+  width: 100%;
+  max-width: 400px;
+  height: 150px;
+  border: 1.5px dashed #d1d5db;
+  border-radius: 6px;
+  cursor: crosshair;
+  background: #fff;
+  touch-action: none;
+}
+.sig-hint {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  margin: 0;
+}
+.sig-clear-btn {
+  padding: 0.3rem 0.9rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: #fff;
+  font-size: 0.8rem;
+  color: #374151;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.sig-clear-btn:hover {
+  background: #f3f4f6;
+}
+.sig-upload-area {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+.sig-upload-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1.25rem;
+  border: 1.5px solid #d1d5db;
+  border-radius: 8px;
+  background: #fff;
+  font-size: 0.85rem;
+  color: #374151;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+.sig-upload-label:hover {
+  border-color: #1a1a2e;
+}
+.sig-upload-input {
+  display: none;
+}
+.sig-error {
+  font-size: 0.78rem;
+  color: #dc2626;
+  margin: 0;
+}
+.sig-preview {
+  padding: 0.75rem;
+  border-top: 1.5px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+.sig-preview-label {
+  font-size: 0.78rem;
+  color: #6b7280;
+  margin: 0;
+}
+.sig-preview-img {
+  max-width: 200px;
+  max-height: 80px;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  background: #fff;
+  object-fit: contain;
+}
+
 /* ── Set PIN card ── */
 .eng-pin-card {
   background: #fff;

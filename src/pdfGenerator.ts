@@ -157,7 +157,36 @@ export async function generateCertificatePdf(
     drawField(appliance.workDetails || "", pos.workDetails);
   });
 
-return pdfDoc.save() as Promise<Uint8Array>;}
+  if (data.engineerSignature) {
+    try {
+      const dataUrl = data.engineerSignature
+      const mimeType = dataUrl.split(';')[0].split(':')[1]
+      const base64 = dataUrl.split(',')[1]
+      const binary = atob(base64)
+      const bytes = new Uint8Array(binary.length)
+      for (let i = 0; i < binary.length; i++) {
+        bytes[i] = binary.charCodeAt(i)
+      }
+
+      const sigImage =
+        mimeType === 'image/jpeg' || mimeType === 'image/jpg'
+          ? await pdfDoc.embedJpg(bytes)
+          : await pdfDoc.embedPng(bytes)
+
+      // Adjust x/y/sigWidth to reposition the signature on the template
+      const sigWidth = 0.12 * width
+      const sigHeight = sigImage.height * (sigWidth / sigImage.width)
+      const sigX = 0.66 * width
+      const sigY = height - 0.915 * height - sigHeight
+
+      page.drawImage(sigImage, { x: sigX, y: sigY, width: sigWidth, height: sigHeight })
+    } catch {
+      // Skip signature if image data is invalid
+    }
+  }
+
+  return pdfDoc.save() as Promise<Uint8Array>;
+}
 
 /* =========================
    PRINT
