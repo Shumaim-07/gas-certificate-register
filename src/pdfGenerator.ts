@@ -181,10 +181,10 @@ export async function generateCertificatePdf(
           : await pdfDoc.embedPng(bytes);
 
       // Use config values
-      const sigWidth = (sigWidthPercent / 150) * width;
+      const sigWidth = (sigWidthPercent / 160) * width;
       const sigHeight = sigImage.height * (sigWidth / sigImage.width);
       const sigX = (sigXPercent / 100) * width;
-      const sigY = height - (sigYPercent / 110) * height - sigHeight;
+      const sigY = height - (sigYPercent / 100) * height - sigHeight;
 
       page.drawImage(sigImage, {
         x: sigX,
