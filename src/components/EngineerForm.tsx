@@ -52,7 +52,7 @@ export function EngineerForm({
             {field.multiline ? (
               <textarea
                 id={`ef-${field.key}`}
-                value={data[field.key]}
+                value={data[field.key] ?? ''}
                 onChange={(e) => updateField(field.key, e.target.value)}
                 placeholder={field.placeholder}
                 rows={2}
@@ -61,22 +61,22 @@ export function EngineerForm({
               <input
                 id={`ef-${field.key}`}
                 type={field.key === 'contactNumber' ? 'tel' : 'text'}
-                value={data[field.key]}
+                value={data[field.key] ?? ''}
                 onChange={(e) => updateField(field.key, e.target.value)}
                 placeholder={field.placeholder}
               />
             )}
           </div>
         ))}
-      </div>
 
-      <div className="eng-field eng-field--full sig-section">
-        <label>Engineer Signature</label>
-        <p className="sig-section-hint">This signature will appear on generated certificates.</p>
-        <SignatureInput
-          value={data.signature}
-          onChange={(val) => onChange({ ...data, signature: val })}
-        />
+        <div className="eng-field eng-field--full sig-section">
+          <label>Engineer Signature</label>
+          <p className="sig-section-hint">This signature will appear on generated certificates.</p>
+          <SignatureInput
+            value={data.signature}
+            onChange={(val) => onChange({ ...data, signature: val })}
+          />
+        </div>
       </div>
 
       <button type="button" className="eng-submit-btn" onClick={onSubmit} disabled={saving}>
