@@ -233,7 +233,7 @@ export async function generateCertificatePdf(
             ? await pdfDoc.embedJpg(bytes)
             : await pdfDoc.embedPng(bytes);
 
-        const recWidth = (recWidthPercent / 165) * width;
+        const recWidth = (recWidthPercent / 170) * width;
         const recHeight = recImage.height * (recWidth / recImage.width);
         const recX = (recXPercent / 100) * width;
         const recY = height - (recYPercent / 100) * height - recHeight;
