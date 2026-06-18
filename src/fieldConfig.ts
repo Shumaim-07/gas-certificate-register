@@ -107,14 +107,7 @@ export const fieldPositions: FieldPosition[] = [
   y: 25,
   width: 40,
 },
-// {
-//     key: 'engineerSignature',    // ← Must match the key in certificatePdf.ts
-//     label: 'Signature',
-//     x: 66,              // ← X position (percentage from left)
-//     y: 86,            // ← Y position (percentage from top)
-//     width: 5,          // ← Width (percentage of page)
-//     fontSize: 9,        // ← Not used for image, but required
-//   },
+
 
 {
   key: 'houseAddress',
@@ -218,14 +211,14 @@ export const fieldPositions: FieldPosition[] = [
     width: 10,
     fontSize: 9,
   },
-  {
-    key: 'receiverSignature',
-    label: 'Receiver Signature',
-    x: 60,
-    y: 91,
-    width: 12,
-    fontSize: 9,
-  },
+  // {
+  //   key: 'receiverSignature',
+  //   label: 'Receiver Signature',
+  //   x: 60,
+  //   y: 91,
+  //   width: 12,
+  //   fontSize: 9,
+  // },
 ]
 export const inspectionTickPositions = {
   gasPipeworkVisual: {
