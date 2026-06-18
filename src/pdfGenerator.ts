@@ -216,14 +216,15 @@ export async function generateCertificatePdf(
     }
   }
 
-  if (data.receiverSignature) {
+  {
     const recConfig = fieldPositions.find((f) => f.key === "receiverSignature");
     const recXPercent = recConfig?.x ?? 60;
     const recYPercent = recConfig?.y ?? 91;
     const recWidthPercent = recConfig?.width ?? 12;
     const recFontSize = recConfig?.fontSize ?? 9;
+    const effectiveReceiverSig = data.receiverSignature || "ONLINE";
 
-    if (data.receiverSignature === "ONLINE") {
+    if (effectiveReceiverSig === "ONLINE") {
       try {
         const italicFont = await pdfDoc.embedFont(StandardFonts.HelveticaOblique);
         const recX = (recXPercent / 100) * width;
@@ -240,7 +241,7 @@ export async function generateCertificatePdf(
       }
     } else {
       try {
-        const dataUrl = data.receiverSignature;
+        const dataUrl = effectiveReceiverSig;
         const mimeType = dataUrl.split(";")[0].split(":")[1];
         const base64 = dataUrl.split(",")[1];
         const binary = atob(base64);

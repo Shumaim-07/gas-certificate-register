@@ -29,6 +29,16 @@ const SAFETY_FIELDS = [
 
 export function CertificateForm({ data, onChange, onPrint, saving }: CertificateFormProps) {
   const [step, setStep] = useState(1);
+  const [step1Error, setStep1Error] = useState<string | null>(null);
+
+  const goToStep2 = () => {
+    if (!data.siteHouseAddress.trim()) {
+      setStep1Error("House / Street Address is required.");
+      return;
+    }
+    setStep1Error(null);
+    setStep(2);
+  };
 
   const updateField = (key: keyof CertificateData, value: any) => {
     const updated: CertificateData = { ...data, [key]: value };
@@ -106,12 +116,15 @@ export function CertificateForm({ data, onChange, onPrint, saving }: Certificate
             </div>
 
             <div className="cf-field">
-              <label>House / Street Address</label>
+              <label>House / Street Address <span style={{ color: '#c00' }}>*</span></label>
               <input
                 placeholder="Street address of the property"
                 value={data.siteHouseAddress}
-                onChange={(e) => updateField("siteHouseAddress", e.target.value)}
+                maxLength={40}
+                onChange={(e) => { updateField("siteHouseAddress", e.target.value); setStep1Error(null); }}
               />
+              <span style={{ fontSize: '0.75rem', color: '#888' }}>{data.siteHouseAddress.length}/40</span>
+              {step1Error && <span style={{ fontSize: '0.8rem', color: '#c00' }}>{step1Error}</span>}
             </div>
 
             <div className="cf-2col">
@@ -158,7 +171,7 @@ export function CertificateForm({ data, onChange, onPrint, saving }: Certificate
             </div>
 
             <div className="cf-nav">
-              <button className="eng-btn-primary" onClick={() => setStep(2)}>Next →</button>
+              <button className="eng-btn-primary" onClick={goToStep2}>Next →</button>
             </div>
           </>
         )}
@@ -182,8 +195,10 @@ export function CertificateForm({ data, onChange, onPrint, saving }: Certificate
               <input
                 placeholder="Landlord's address"
                 value={data.landlordHouseAddress}
+                maxLength={40}
                 onChange={(e) => updateField("landlordHouseAddress", e.target.value)}
               />
+              <span style={{ fontSize: '0.75rem', color: '#888' }}>{data.landlordHouseAddress.length}/40</span>
             </div>
 
             <div className="cf-2col">

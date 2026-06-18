@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import type { EngineerFormData } from '../types'
 import { SignatureInput } from './SignatureInput'
 
@@ -10,6 +11,11 @@ interface EngineerFormProps {
   title: string
   subtitle: string
 }
+
+const REQUIRED_FIELDS: (keyof EngineerFormData)[] = [
+  'gasSafeRegisterNumber', 'engineerName', 'gasSafeLicenceNumber',
+  'houseAddress', 'area', 'postCode', 'contactNumber',
+]
 
 const fields: { key: keyof EngineerFormData; label: string; placeholder?: string; multiline?: boolean; full?: boolean }[] = [
   { key: 'gasSafeRegisterNumber', label: 'Gas Safe Register No.', placeholder: 'e.g. 512887' },
@@ -31,8 +37,26 @@ export function EngineerForm({
   title,
   subtitle,
 }: EngineerFormProps) {
+  const [errors, setErrors] = useState<Partial<Record<keyof EngineerFormData, string>>>({})
+
   const updateField = (key: keyof EngineerFormData, value: string) => {
     onChange({ ...data, [key]: value })
+    if (errors[key]) setErrors((prev) => ({ ...prev, [key]: undefined }))
+  }
+
+  const handleSubmit = () => {
+    const newErrors: Partial<Record<keyof EngineerFormData, string>> = {}
+    for (const field of REQUIRED_FIELDS) {
+      if (!String(data[field] ?? '').trim()) {
+        newErrors[field] = 'This field is required'
+      }
+    }
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors)
+      return
+    }
+    setErrors({})
+    onSubmit()
   }
 
   return (
@@ -46,28 +70,43 @@ export function EngineerForm({
       </div>
 
       <div className="eng-form-grid">
-        {fields.map((field) => (
-          <div key={field.key} className={`eng-field${field.full ? ' eng-field--full' : ''}`}>
-            <label htmlFor={`ef-${field.key}`}>{field.label}</label>
-            {field.multiline ? (
-              <textarea
-                id={`ef-${field.key}`}
-                value={data[field.key] ?? ''}
-                onChange={(e) => updateField(field.key, e.target.value)}
-                placeholder={field.placeholder}
-                rows={2}
-              />
-            ) : (
-              <input
-                id={`ef-${field.key}`}
-                type={field.key === 'contactNumber' ? 'tel' : 'text'}
-                value={data[field.key] ?? ''}
-                onChange={(e) => updateField(field.key, e.target.value)}
-                placeholder={field.placeholder}
-              />
-            )}
-          </div>
-        ))}
+        {fields.map((field) => {
+          const isRequired = REQUIRED_FIELDS.includes(field.key)
+          const isAddress = field.key === 'houseAddress'
+          const fieldError = errors[field.key]
+          return (
+            <div key={field.key} className={`eng-field${field.full ? ' eng-field--full' : ''}`}>
+              <label htmlFor={`ef-${field.key}`}>
+                {field.label}
+                {isRequired && <span style={{ color: '#c00' }}> *</span>}
+              </label>
+              {field.multiline ? (
+                <textarea
+                  id={`ef-${field.key}`}
+                  value={data[field.key] ?? ''}
+                  onChange={(e) => updateField(field.key, e.target.value)}
+                  placeholder={field.placeholder}
+                  rows={2}
+                  maxLength={isAddress ? 40 : undefined}
+                  style={fieldError ? { borderColor: '#c00' } : undefined}
+                />
+              ) : (
+                <input
+                  id={`ef-${field.key}`}
+                  type={field.key === 'contactNumber' ? 'tel' : 'text'}
+                  value={data[field.key] ?? ''}
+                  onChange={(e) => updateField(field.key, e.target.value)}
+                  placeholder={field.placeholder}
+                  style={fieldError ? { borderColor: '#c00' } : undefined}
+                />
+              )}
+              {isAddress && (
+                <span style={{ fontSize: '0.75rem', color: '#888' }}>{String(data[field.key] ?? '').length}/40</span>
+              )}
+              {fieldError && <span style={{ fontSize: '0.8rem', color: '#c00' }}>{fieldError}</span>}
+            </div>
+          )
+        })}
 
         <div className="eng-field eng-field--full sig-section">
           <label>Engineer Signature</label>
@@ -79,7 +118,7 @@ export function EngineerForm({
         </div>
       </div>
 
-      <button type="button" className="eng-submit-btn" onClick={onSubmit} disabled={saving}>
+      <button type="button" className="eng-submit-btn" onClick={handleSubmit} disabled={saving}>
         {saving ? 'Saving…' : submitLabel}
       </button>
     </div>

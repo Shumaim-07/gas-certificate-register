@@ -6,6 +6,8 @@ import { downloadCertificatePdf } from '../pdfGenerator'
 import { certificateFromEngineer, emptyCertificateData, type CertificateData } from '../types'
 import { useEffect, useState } from 'react'
 
+const ONE_DAY_MS = 24 * 60 * 60 * 1000
+
 export function CertificatePage() {
   const { id } = useParams()
   const navigate = useNavigate()
@@ -16,6 +18,7 @@ export function CertificatePage() {
   const [saving, setSaving] = useState(false)
   const [loading, setLoading] = useState(!isNew)
   const [error, setError] = useState<string | null>(null)
+  const [isLocked, setIsLocked] = useState(false)
 
   useEffect(() => {
     if (!engineer) return
@@ -29,7 +32,13 @@ export function CertificatePage() {
 
     setLoading(true)
     api.getCertificate(id)
-      .then((cert) => setData(cert.data))
+      .then((cert) => {
+        const age = Date.now() - new Date(cert.createdAt).getTime()
+        if (age > ONE_DAY_MS) {
+          setIsLocked(true)
+        }
+        setData(cert.data)
+      })
       .catch((err) => setError(err instanceof Error ? err.message : 'Failed to load certificate'))
       .finally(() => setLoading(false))
   }, [engineer, id, isNew])
@@ -54,6 +63,26 @@ export function CertificatePage() {
 
   if (loading) {
     return <div className="page-center"><p className="muted">Loading certificate…</p></div>
+  }
+
+  if (isLocked) {
+    return (
+      <div className="certificate-page">
+        <div className="certificate-topbar">
+          <Link to="/dashboard" className="back-link">← Back to Dashboard</Link>
+          <h1>Edit Gas Certificate</h1>
+        </div>
+        <div className="certificate-form-wrap">
+          <div className="alert alert-error certificate-error" style={{ textAlign: 'center', padding: '2rem' }}>
+            <strong>Certificate Locked</strong>
+            <p style={{ marginTop: '0.5rem' }}>This certificate was issued more than 24 hours ago and can no longer be edited.</p>
+            <Link to="/dashboard" className="eng-btn-primary" style={{ display: 'inline-block', marginTop: '1rem' }}>
+              ← Back to Dashboard
+            </Link>
+          </div>
+        </div>
+      </div>
+    )
   }
 
   return (
