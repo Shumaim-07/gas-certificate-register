@@ -198,7 +198,7 @@ export async function generateCertificatePdf(
   if (data.receiverSignature) {
     const recConfig = fieldPositions.find((f) => f.key === "receiverSignature");
     const recXPercent = recConfig?.x ?? 60;
-    const recYPercent = recConfig?.y ?? 91;
+    const recYPercent = recConfig?.y ?? 90.5;
     const recWidthPercent = recConfig?.width ?? 12;
     const recFontSize = recConfig?.fontSize ?? 9;
 
