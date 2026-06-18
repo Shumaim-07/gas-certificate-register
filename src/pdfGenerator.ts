@@ -164,7 +164,7 @@ export async function generateCertificatePdf(
       const sigConfig = fieldPositions.find((f) => f.key === "engineerSignature");
       const sigXPercent = sigConfig?.x ?? 66;
       const sigYPercent = sigConfig?.y ?? 80;
-      const sigWidthPercent = sigConfig?.width ?? 12;
+      const sigWidthPercent = sigConfig?.width ?? 5;
 
       const dataUrl = data.engineerSignature;
       const mimeType = dataUrl.split(";")[0].split(":")[1];
