@@ -111,8 +111,8 @@ export function DashboardPage() {
                       className="eng-cert-btn eng-cert-btn--primary"
                       onClick={async () => {
                         try {
-                          const { printCertificatePdf } = await import('../pdfGenerator')
-                          await printCertificatePdf(cert.data)
+                          const { downloadCertificatePdf } = await import('../pdfGenerator')
+                          await downloadCertificatePdf(cert.data)
                         } catch (err) {
                           console.error('Failed to print PDF:', err)
                         }

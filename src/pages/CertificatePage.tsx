@@ -2,7 +2,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom'
 import { api } from '../api'
 import { CertificateForm } from '../components/CertificateForm'
 import { useAuth } from '../context/AuthContext'
-import { printCertificatePdf } from '../pdfGenerator'
+import { downloadCertificatePdf } from '../pdfGenerator'
 import { certificateFromEngineer, emptyCertificateData, type CertificateData } from '../types'
 import { useEffect, useState } from 'react'
 
@@ -43,7 +43,7 @@ export function CertificatePage() {
       } else {
         await api.updateCertificate(id!, data.certificateRef, data)
       }
-      await printCertificatePdf(data)
+      await downloadCertificatePdf(data)
       navigate('/dashboard')
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to print certificate')
