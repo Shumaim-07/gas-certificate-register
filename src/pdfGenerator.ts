@@ -159,29 +159,40 @@ export async function generateCertificatePdf(
 
   if (data.engineerSignature) {
     try {
-      const dataUrl = data.engineerSignature
-      const mimeType = dataUrl.split(';')[0].split(':')[1]
-      const base64 = dataUrl.split(',')[1]
-      const binary = atob(base64)
-      const bytes = new Uint8Array(binary.length)
+      // Get position from config
+      const sigConfig = fieldPositions.find((f) => f.key === "engineerSignature");
+      const sigXPercent = sigConfig?.x ?? 66;
+      const sigYPercent = sigConfig?.y ?? 91.5;
+      const sigWidthPercent = sigConfig?.width ?? 12;
+
+      const dataUrl = data.engineerSignature;
+      const mimeType = dataUrl.split(";")[0].split(":")[1];
+      const base64 = dataUrl.split(",")[1];
+      const binary = atob(base64);
+      const bytes = new Uint8Array(binary.length);
       for (let i = 0; i < binary.length; i++) {
-        bytes[i] = binary.charCodeAt(i)
+        bytes[i] = binary.charCodeAt(i);
       }
 
       const sigImage =
-        mimeType === 'image/jpeg' || mimeType === 'image/jpg'
+        mimeType === "image/jpeg" || mimeType === "image/jpg"
           ? await pdfDoc.embedJpg(bytes)
-          : await pdfDoc.embedPng(bytes)
+          : await pdfDoc.embedPng(bytes);
 
-      // Adjust x/y/sigWidth to reposition the signature on the template
-      const sigWidth = 0.12 * width
-      const sigHeight = sigImage.height * (sigWidth / sigImage.width)
-      const sigX = 0.66 * width
-      const sigY = height - 0.915 * height - sigHeight
+      // Use config values
+      const sigWidth = (sigWidthPercent / 100) * width;
+      const sigHeight = sigImage.height * (sigWidth / sigImage.width);
+      const sigX = (sigXPercent / 100) * width;
+      const sigY = height - (sigYPercent / 100) * height - sigHeight;
 
-      page.drawImage(sigImage, { x: sigX, y: sigY, width: sigWidth, height: sigHeight })
-    } catch {
-      // Skip signature if image data is invalid
+      page.drawImage(sigImage, {
+        x: sigX,
+        y: sigY,
+        width: sigWidth,
+        height: sigHeight,
+      });
+    } catch (error) {
+      console.error("Failed to embed signature:", error);
     }
   }
 
@@ -214,8 +225,6 @@ export async function printCertificatePdf(
   setTimeout(() => URL.revokeObjectURL(url), 60000);
 }
 
-
-
 function generateFileName(data: CertificateData): string {
   const address = (data.siteHouseAddress || "").toUpperCase();
 
@@ -224,9 +233,7 @@ function generateFileName(data: CertificateData): string {
   const doorNumber = doorNumberMatch ? doorNumberMatch[0] : "000";
 
   // postcode
-  const postcodeMatch = address.match(
-    /[A-Z]{1,2}\d[A-Z\d]?\s*\d[A-Z]{2}/i
-  );
+  const postcodeMatch = address.match(/[A-Z]{1,2}\d[A-Z\d]?\s*\d[A-Z]{2}/i);
 
   const postcode = postcodeMatch
     ? postcodeMatch[0].replace(/\s/g, "")
@@ -249,18 +256,20 @@ export async function downloadCertificatePdf(
 ): Promise<void> {
   const pdfBytes = await generateCertificatePdf(data);
 
-const blob = new Blob([new Uint8Array(pdfBytes)], { type: "application/pdf" });
-const url = URL.createObjectURL(blob);
+  const blob = new Blob([new Uint8Array(pdfBytes)], {
+    type: "application/pdf",
+  });
+  const url = URL.createObjectURL(blob);
 
-// download with correct name
-const a = document.createElement("a");
-a.href = url;
-a.download = generateFileName(data);
-a.click();
+  // download with correct name
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = generateFileName(data);
+  a.click();
 
-// then open print (same blob)
-setTimeout(() => {
-  const w = window.open(url);
-  w?.print();
-}, 500);
+  // then open print (same blob)
+  setTimeout(() => {
+    const w = window.open(url);
+    w?.print();
+  }, 500);
 }
