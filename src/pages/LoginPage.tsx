@@ -34,6 +34,7 @@ export function LoginPage() {
   const [error, setError] = useState<string | null>(null)
   const [serverOk, setServerOk] = useState<boolean | null>(null)
   const [showRequestModal, setShowRequestModal] = useState(false)
+  const [frozenInfo, setFrozenInfo] = useState<{ message: string; reason: string | null } | null>(null)
 
   useEffect(() => {
     api.healthCheck()
@@ -83,9 +84,13 @@ export function LoginPage() {
       loginEngineer(result.token, result.engineer!)
       navigate(result.needsProfile ? '/setup-profile' : '/dashboard')
     } catch (err) {
-      const e = err as Error & { code?: string; userId?: string }
+      const e = err as Error & { code?: string; userId?: string; reason?: string }
       if (e.code === 'PIN_NOT_SET' && e.userId) {
         navigate('/set-pin', { state: { userId: e.userId } })
+        return
+      }
+      if (e.code === 'ACCOUNT_FROZEN') {
+        setFrozenInfo({ message: e.message, reason: e.reason ?? null })
         return
       }
       setError(e.message)
@@ -126,6 +131,26 @@ export function LoginPage() {
 
       {/* ── RIGHT PANEL ── */}
       <div className="login-right">
+        {frozenInfo ? (
+          <div className="login-frozen-card">
+            <div className="login-frozen-icon">🔒</div>
+            <h2 className="login-frozen-title">Account Suspended</h2>
+            <p className="login-frozen-msg">{frozenInfo.message}</p>
+            {frozenInfo.reason === 'payment_not_submitted' && (
+              <p className="login-frozen-hint">Once payment is confirmed by your administrator, your account will be reactivated.</p>
+            )}
+            {frozenInfo.reason === 'rule_violation' && (
+              <p className="login-frozen-hint">Please contact your administrator to appeal this decision.</p>
+            )}
+            <button
+              type="button"
+              className="login-frozen-back"
+              onClick={() => { setFrozenInfo(null); setPassword(''); setError(null) }}
+            >
+              ← Back to login
+            </button>
+          </div>
+        ) : (
         <div className="login-card">
           <h2 className="login-card-h2">Log in</h2>
           <p className="login-card-sub">Engineer &amp; admin access.</p>
@@ -208,6 +233,7 @@ export function LoginPage() {
         <p className="login-footer-note">
           Protected sign-in. Only Gas Safe registered engineers can issue certificates.
         </p>
+        )}
       </div>
     </div>
   )

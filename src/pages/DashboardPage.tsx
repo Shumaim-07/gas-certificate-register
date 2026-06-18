@@ -30,6 +30,7 @@ export function DashboardPage() {
           <span>GasCertify UK</span>
         </div>
         <div className="eng-topbar-actions">
+          <Link to="/" className="eng-btn-ghost">Home</Link>
           <Link to="/certificate/new" className="eng-btn-primary">+ New Certificate</Link>
           <Link to="/profile/edit" className="eng-btn-ghost">Edit Details</Link>
           <button type="button" className="eng-btn-ghost" onClick={logout}>Logout</button>
@@ -37,6 +38,23 @@ export function DashboardPage() {
       </header>
 
       <div className="eng-dashboard-body">
+        {/* ── Frozen banner ── */}
+        {engineer.frozen && (
+          <div className="eng-frozen-banner">
+            <span className="eng-frozen-icon">🔒</span>
+            <div>
+              <strong>Account Suspended</strong>
+              <p>
+                {engineer.freezeReason === 'rule_violation'
+                  ? 'Your account has been suspended due to a rule violation. Please contact your administrator.'
+                  : engineer.freezeReason === 'payment_not_submitted'
+                    ? 'Your account has been suspended because payment was not submitted. Please submit payment to regain access.'
+                    : 'Your account has been suspended. Please contact your administrator.'}
+              </p>
+            </div>
+          </div>
+        )}
+
         {/* ── Welcome strip ── */}
         <div className="eng-welcome">
           <div>

@@ -82,4 +82,36 @@ router.delete('/engineers/:id', async (req, res) => {
   }
 })
 
+router.patch('/engineers/:id/freeze', async (req, res) => {
+  try {
+    const { reason } = req.body
+    if (!['rule_violation', 'payment_not_submitted'].includes(reason)) {
+      return res.status(400).json({ error: 'Invalid freeze reason. Must be rule_violation or payment_not_submitted.' })
+    }
+    const engineer = await Engineer.findByIdAndUpdate(
+      req.params.id,
+      { frozen: true, freezeReason: reason },
+      { new: true },
+    )
+    if (!engineer) return res.status(404).json({ error: 'Engineer not found' })
+    res.json(engineerToJson(engineer))
+  } catch (err) {
+    handleError(res, err, 'Could not freeze engineer')
+  }
+})
+
+router.patch('/engineers/:id/unfreeze', async (req, res) => {
+  try {
+    const engineer = await Engineer.findByIdAndUpdate(
+      req.params.id,
+      { frozen: false, freezeReason: null },
+      { new: true },
+    )
+    if (!engineer) return res.status(404).json({ error: 'Engineer not found' })
+    res.json(engineerToJson(engineer))
+  } catch (err) {
+    handleError(res, err, 'Could not unfreeze engineer')
+  }
+})
+
 export default router

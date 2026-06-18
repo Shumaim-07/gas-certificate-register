@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { RequestModal } from "../components/RequestModal";
+import { useAuth } from "../context/AuthContext";
 
 const FAQ_ITEMS = [
   {
@@ -48,6 +49,7 @@ function LogoIcon({
 }
 
 export function LandingPage() {
+  const { role } = useAuth();
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [showRequestModal, setShowRequestModal] = useState(false);
 
@@ -79,19 +81,27 @@ export function LandingPage() {
           </div>
 
           <div className="lp-nav-actions">
-  <Link to="/login" className="lp-nav-login">
-    Log in
-  </Link>
-  <Link 
-    to="#" 
-    className="lp-nav-cta"
-    onClick={(e) => {
-      e.preventDefault();
-      setShowRequestModal(true);
-    }}
-  >
-    Get started
-  </Link>
+  {role === 'engineer' ? (
+    <Link to="/dashboard" className="lp-nav-cta">
+      Dashboard →
+    </Link>
+  ) : (
+    <>
+      <Link to="/login" className="lp-nav-login">
+        Log in
+      </Link>
+      <Link
+        to="#"
+        className="lp-nav-cta"
+        onClick={(e) => {
+          e.preventDefault();
+          setShowRequestModal(true);
+        }}
+      >
+        Get started
+      </Link>
+    </>
+  )}
 </div>
         </div>
       </nav>

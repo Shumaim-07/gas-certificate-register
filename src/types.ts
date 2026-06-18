@@ -18,6 +18,8 @@ export interface EngineerProfile {
   contactNumber: string
 
   profileComplete: boolean
+  frozen?: boolean
+  freezeReason?: string | null
   createdAt?: string
   updatedAt?: string
 }

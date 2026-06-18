@@ -57,9 +57,11 @@ async function request<T>(url: string, options?: RequestInit): Promise<T> {
     const error = new Error(body.error ?? `Request failed (${response.status})`) as Error & {
       code?: string
       userId?: string
+      reason?: string
     }
     error.code = body.code
     error.userId = body.userId
+    error.reason = body.reason
     throw error
   }
 
@@ -151,6 +153,15 @@ export const api = {
 
   adminDeleteEngineer: (id: string) =>
     request<void>(`/admin/engineers/${id}`, { method: 'DELETE' }),
+
+  adminFreezeEngineer: (id: string, reason: 'rule_violation' | 'payment_not_submitted') =>
+    request<EngineerProfile>(`/admin/engineers/${id}/freeze`, {
+      method: 'PATCH',
+      body: JSON.stringify({ reason }),
+    }),
+
+  adminUnfreezeEngineer: (id: string) =>
+    request<EngineerProfile>(`/admin/engineers/${id}/unfreeze`, { method: 'PATCH' }),
 
   submitJoinRequest: (email: string, name: string, gasSafeNumber: string) =>
   request<{ message: string }>('/requests', {

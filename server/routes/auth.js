@@ -169,6 +169,15 @@ router.post('/engineer/login', authLimiter, async (req, res) => {
     return res.status(401).json({ error: 'Invalid User ID or password' })
   }
 
+  if (engineer.frozen) {
+    const reasonMessages = {
+      rule_violation: 'Your account has been suspended due to a rule violation. Please contact the administrator.',
+      payment_not_submitted: 'Your account has been suspended because payment was not submitted. Please pay to regain access.',
+    }
+    const msg = reasonMessages[engineer.freezeReason] ?? 'Your account has been suspended. Please contact the administrator.'
+    return res.status(403).json({ error: msg, code: 'ACCOUNT_FROZEN', reason: engineer.freezeReason })
+  }
+
   const token = signToken({ role: 'engineer', id: engineer._id.toString(), userId: engineer.userId })
   res.json({
     token,

@@ -23,6 +23,9 @@ const engineerSchema = new mongoose.Schema(
 
     contactNumber: { type: String, default: "" },
     profileComplete: { type: Boolean, default: false },
+
+    frozen: { type: Boolean, default: false },
+    freezeReason: { type: String, default: null },
   },
   { timestamps: true },
 );
@@ -41,6 +44,8 @@ export function engineerToJson(doc) {
     postCode: doc.postCode,
     contactNumber: doc.contactNumber,
     profileComplete: doc.profileComplete,
+    frozen: doc.frozen ?? false,
+    freezeReason: doc.freezeReason ?? null,
     createdAt: doc.createdAt,
     updatedAt: doc.updatedAt,
   };

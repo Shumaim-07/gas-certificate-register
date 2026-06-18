@@ -3099,3 +3099,608 @@ html {
     gap: 0.3rem;
   }
 }
+
+/* ================================================================
+   ADMIN DASHBOARD — REDESIGN
+   ================================================================ */
+
+.adm-dash {
+  min-height: 100vh;
+  background: #f0f2f5;
+  font-family: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* ── Top Bar ── */
+.adm-topbar {
+  background: #1e1b4b;
+  padding: 0 2rem;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+}
+
+.adm-topbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.adm-topbar-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.1);
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+}
+
+.adm-topbar-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.01em;
+}
+
+.adm-topbar-sub {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.45);
+  margin-top: 0.05rem;
+}
+
+.adm-topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.adm-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 1.1rem;
+  background: #F4EA03;
+  color: #1a1a1a;
+  border: none;
+  border-radius: 7px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+
+.adm-btn-primary:hover { background: #e8d800; }
+
+.adm-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 1rem;
+  background: transparent;
+  color: #fff;
+  border: 1.5px solid rgba(255,255,255,0.25);
+  border-radius: 7px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+
+.adm-btn-ghost:hover {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.5);
+}
+
+/* ── Body ── */
+.adm-body {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+/* ── Stats Row ── */
+.adm-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.adm-stat-card {
+  border-radius: 14px;
+  padding: 1.25rem 1.5rem;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.adm-stat-card::after {
+  content: '';
+  position: absolute;
+  right: -10px;
+  top: -10px;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+}
+
+.adm-stat--total  { background: linear-gradient(135deg, #1e40af, #3b82f6); }
+.adm-stat--active { background: linear-gradient(135deg, #166534, #16a34a); }
+.adm-stat--frozen { background: linear-gradient(135deg, #9f1239, #dc2626); }
+.adm-stat--pending { background: linear-gradient(135deg, #92400e, #d97706); }
+
+.adm-stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 0.4rem;
+}
+
+.adm-stat-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.75);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ── Alert ── */
+.adm-alert-error {
+  padding: 0.75rem 1rem;
+  background: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+  font-size: 0.9rem;
+}
+
+/* ── Section ── */
+.adm-section {
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+}
+
+.adm-section-header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.adm-section-header--blue {
+  border-left: 4px solid #3b82f6;
+}
+
+.adm-section-header--amber {
+  border-left: 4px solid #d97706;
+}
+
+.adm-section-header h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1e293b;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.2rem;
+}
+
+.adm-section-desc {
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+.adm-badge-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 0.4rem;
+  background: #F4EA03;
+  color: #1a1a1a;
+  font-size: 0.72rem;
+  font-weight: 700;
+  border-radius: 999px;
+}
+
+/* ── Table ── */
+.adm-table-wrap {
+  overflow-x: auto;
+}
+
+.adm-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.adm-table th {
+  padding: 0.75rem 1.25rem;
+  background: #f8fafc;
+  text-align: left;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.adm-table td {
+  padding: 0.9rem 1.25rem;
+  border-bottom: 1px solid #f1f5f9;
+  color: #1e293b;
+  vertical-align: middle;
+}
+
+.adm-table tr:last-child td {
+  border-bottom: none;
+}
+
+.adm-table tr:hover td {
+  background: #fafbfc;
+}
+
+.adm-row--frozen td {
+  background: #fff5f5 !important;
+}
+
+/* ── Status Badges ── */
+.adm-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.adm-badge--active {
+  background: #dcfce7;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+}
+
+.adm-badge--frozen {
+  background: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+}
+
+.adm-status-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.adm-freeze-reason {
+  font-size: 0.7rem;
+  color: #b91c1c;
+  font-weight: 600;
+}
+
+/* ── Row Action Buttons ── */
+.adm-row-actions {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.adm-action-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem 0.7rem;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  text-decoration: none;
+  transition: background 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+
+.adm-action-btn--green {
+  color: #15803d;
+  background: #f0fdf4;
+  border-color: #bbf7d0;
+}
+.adm-action-btn--green:hover {
+  background: #dcfce7;
+  border-color: #86efac;
+}
+
+.adm-action-btn--orange {
+  color: #c2410c;
+  background: #fff7ed;
+  border-color: #fed7aa;
+}
+.adm-action-btn--orange:hover {
+  background: #ffedd5;
+  border-color: #fdba74;
+}
+
+.adm-action-btn--red {
+  color: #b91c1c;
+  background: #fef2f2;
+  border-color: #fecaca;
+}
+.adm-action-btn--red:hover {
+  background: #fee2e2;
+  border-color: #fca5a5;
+}
+
+/* ── Empty State ── */
+.adm-empty {
+  text-align: center;
+  padding: 3rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  color: #64748b;
+}
+
+/* ── Freeze Modal ── */
+.adm-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.adm-modal {
+  background: #fff;
+  border-radius: 18px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.2);
+}
+
+.adm-modal-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.adm-modal-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.adm-modal-header h3 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 0.4rem;
+}
+
+.adm-modal-header p {
+  font-size: 0.88rem;
+  color: #64748b;
+}
+
+.adm-modal-reasons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-bottom: 1.5rem;
+}
+
+.adm-reason-option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #334155;
+  transition: border-color 0.15s, background 0.15s;
+  user-select: none;
+}
+
+.adm-reason-option input { display: none; }
+
+.adm-reason-dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid #cbd5e1;
+  flex-shrink: 0;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.adm-reason-option--active {
+  border-color: #dc2626;
+  background: #fff5f5;
+  color: #b91c1c;
+}
+
+.adm-reason-option--active .adm-reason-dot {
+  background: #dc2626;
+  border-color: #dc2626;
+}
+
+.adm-modal-actions {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.adm-modal-cancel {
+  flex: 1;
+  padding: 0.75rem;
+  background: #f1f5f9;
+  color: #475569;
+  border: none;
+  border-radius: 9px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.adm-modal-cancel:hover { background: #e2e8f0; }
+
+.adm-modal-confirm {
+  flex: 1;
+  padding: 0.75rem;
+  background: #dc2626;
+  color: #fff;
+  border: none;
+  border-radius: 9px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.adm-modal-confirm:hover { background: #b91c1c; }
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .adm-stats {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 580px) {
+  .adm-stats {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+  .adm-stat-value { font-size: 1.5rem; }
+  .adm-topbar { padding: 0 1rem; }
+  .adm-body { padding: 1.25rem 1rem 2rem; }
+  .adm-topbar-sub { display: none; }
+}
+
+/* ================================================================
+   ENGINEER DASHBOARD — FROZEN BANNER
+   ================================================================ */
+
+.eng-frozen-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: #fef2f2;
+  border: 1.5px solid #fecaca;
+  border-radius: 12px;
+  color: #b91c1c;
+}
+
+.eng-frozen-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+  line-height: 1;
+  margin-top: 0.1rem;
+}
+
+.eng-frozen-banner strong {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #991b1b;
+  margin-bottom: 0.25rem;
+}
+
+.eng-frozen-banner p {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: #b91c1c;
+}
+
+/* ================================================================
+   LOGIN PAGE — FROZEN STATE
+   ================================================================ */
+
+.login-frozen-card {
+  background: #fff;
+  border-radius: 16px;
+  border: 2px solid #fecaca;
+  padding: 2.5rem 2.25rem 2rem;
+  width: 100%;
+  max-width: 440px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+  text-align: center;
+}
+
+.login-frozen-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.login-frozen-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #991b1b;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.02em;
+}
+
+.login-frozen-msg {
+  font-size: 0.9rem;
+  color: #b91c1c;
+  line-height: 1.65;
+  background: #fef2f2;
+  border-radius: 8px;
+  padding: 0.85rem 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.login-frozen-hint {
+  font-size: 0.82rem;
+  color: #64748b;
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+}
+
+.login-frozen-back {
+  display: inline-flex;
+  align-items: center;
+  background: none;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 0.55rem 1.1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: #334155;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.login-frozen-back:hover {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+}
