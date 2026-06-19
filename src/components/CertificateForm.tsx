@@ -66,16 +66,16 @@ export function CertificateForm({ data, onChange, onPrint, saving }: Certificate
     if (value === "HOB") {
       appliance.flueType = "FL";
       // Force NA for these fields
-      appliance.visualFlueCondition = "NA";
-      appliance.flueOperationChecks = "NA";
-      appliance.combustionReading = "NA";
+      appliance.visualFlueCondition = "N/A";
+      appliance.flueOperationChecks = "N/A";
+      appliance.combustionReading = "N/A";
     } else {
       // For other types, set appropriate flue type
       appliance.flueType = flueMap[value] || "";
       // Only reset if they were NA (clear them so user can select)
-      if (appliance.visualFlueCondition === "NA") appliance.visualFlueCondition = undefined;
-      if (appliance.flueOperationChecks === "NA") appliance.flueOperationChecks = undefined;
-      if (appliance.combustionReading === "NA") appliance.combustionReading = "";
+      if (appliance.visualFlueCondition === "N/A") appliance.visualFlueCondition = undefined;
+      if (appliance.flueOperationChecks === "N/A") appliance.flueOperationChecks = undefined;
+      if (appliance.combustionReading === "N/A") appliance.combustionReading = "";
     }
   }
   
@@ -255,9 +255,9 @@ export function CertificateForm({ data, onChange, onPrint, saving }: Certificate
                       operatingPressure: "",
                       safetyDevice: "PASS" as const,
                       ventilation: "YES" as const,
-                      visualFlueCondition: "NA" as const,
-                      flueOperationChecks: "NA" as const,
-                      combustionReading: "NA",
+                      visualFlueCondition: "N/A" as const,
+                      flueOperationChecks: "N/A" as const,
+                      combustionReading: "N/A",
                       applianceServiced: "YES" as const,
                       coAlarmFitted: "YES" as const,
                       coAlarmTested: "PASS" as const,
@@ -438,7 +438,7 @@ export function CertificateForm({ data, onChange, onPrint, saving }: Certificate
                       <option value="">Select</option>
                       <option value="PASS">PASS</option>
                       <option value="FAIL">FAIL</option>
-                      <option value="NA">NA</option>
+                      <option value="N/A">N/A</option>
                     </select>
                   </div>
                   <div className="cf-field">
@@ -465,20 +465,20 @@ export function CertificateForm({ data, onChange, onPrint, saving }: Certificate
                       <option value="">Select</option>
                       <option value="PASS">PASS</option>
                       <option value="FAIL">FAIL</option>
-                      <option value="NA">NA</option>
+                      <option value="N/A">N/A</option>
                     </select>
                   </div>
                   <div className="cf-field">
                     <label>Flue operation checks</label>
                     <select
-                      value={appliance.type === "HOB" ? "NA" : appliance.flueOperationChecks || ""}
+                      value={appliance.type === "HOB" ? "N/A" : appliance.flueOperationChecks || ""}
                       disabled={appliance.type === "HOB"}
                       onChange={(e) => updateAppliance(index, "flueOperationChecks", e.target.value)}
                     >
                       <option value="">Select</option>
                       <option value="PASS">PASS</option>
                       <option value="FAIL">FAIL</option>
-                      <option value="NA">NA</option>
+                      <option value="N/A">N/A</option>
                     </select>
                   </div>
                 </div>
@@ -488,14 +488,14 @@ export function CertificateForm({ data, onChange, onPrint, saving }: Certificate
     <label>Combustion analyser reading</label>
     <input
       type="text"
-      placeholder="Enter reading or select NA"
-      value={appliance.type === "HOB" ? "NA" : appliance.combustionReading || ""}
+      placeholder="Enter reading or select N/A"
+      value={appliance.type === "HOB" ? "N/A" : appliance.combustionReading || ""}
       disabled={appliance.type === "HOB"}
       onChange={(e) => updateAppliance(index, "combustionReading", e.target.value)}
       list="combustion-readings"
     />
     <datalist id="combustion-readings">
-      <option value="NA" />
+      <option value="N/A" />
       <option value="PASS" />
       <option value="FAIL" />
     </datalist>
@@ -535,7 +535,7 @@ export function CertificateForm({ data, onChange, onPrint, saving }: Certificate
                       <option value="">Select</option>
                       <option value="PASS">PASS</option>
                       <option value="FAIL">FAIL</option>
-                      <option value="NA">NA</option>
+                      <option value="N/A">N/A</option>
                     </select>
                   </div>
                 </div>

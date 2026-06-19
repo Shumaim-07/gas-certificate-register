@@ -43,15 +43,15 @@ export interface Appliance {
 
   /* Inspection section */
   operatingPressure?: string
-  safetyDevice?: 'PASS' | 'FAIL' | 'NA'
+  safetyDevice?: 'PASS' | 'FAIL' | 'N/A'
   ventilation?: 'YES' | 'NO'
-  visualFlueCondition?: 'PASS' | 'FAIL' | 'NA'
-  flueOperationChecks?: 'PASS' | 'FAIL' | 'NA'
+  visualFlueCondition?: 'PASS' | 'FAIL' | 'N/A'
+  flueOperationChecks?: 'PASS' | 'FAIL' | 'N/A'
   combustionReading?: string
   applianceServiced?: 'YES' | 'NO' | 'NEW'
 
   coAlarmFitted?: 'YES' | 'NO' 
-  coAlarmTested?: 'PASS' | 'FAIL' | 'NA'
+  coAlarmTested?: 'PASS' | 'FAIL' | 'N/A'
   safeToUse?: 'YES' | 'NO'
 
 
@@ -119,10 +119,10 @@ export interface CertificateData {
   remedialAction: string
   nextInspectionDate: string
   comments: string
-  gasPipeworkVisual?: "PASS" | "FAIL" | "NA";
-gasSupplyPipeworkVisual?: "PASS" | "FAIL" | "NA";
+  gasPipeworkVisual?: "PASS" | "FAIL" | "N/A";
+gasSupplyPipeworkVisual?: "PASS" | "FAIL" | "N/A";
 ecvAccess?: "PASS" | "FAIL" ;
-tightnessTest?: "PASS" | "FAIL" | "NA";
+tightnessTest?: "PASS" | "FAIL" | "N/A";
 equipotentialBonding?: "PASS" | "FAIL";
 }
 
@@ -168,9 +168,9 @@ export const emptyCertificateData = (): CertificateData => {
         operatingPressure: '',
         safetyDevice: 'PASS',
         ventilation: 'YES',
-        visualFlueCondition: 'NA',
-        flueOperationChecks: 'NA',
-        combustionReading: 'NA',
+        visualFlueCondition: 'N/A',
+        flueOperationChecks: 'N/A',
+        combustionReading: 'N/A',
         applianceServiced: 'YES',
         coAlarmFitted: 'YES',
         coAlarmTested: 'PASS',

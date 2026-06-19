@@ -224,31 +224,31 @@ export const inspectionTickPositions = {
   gasPipeworkVisual: {
     PASS: { x: 32, y: 86 },
     FAIL: { x: 35, y: 86 },
-    NA: { x: 38, y: 86  },
+    "N/A": { x: 38, y: 86  },
   },
 
   gasSupplyPipeworkVisual: {
     PASS: { x: 32, y: 88.5 },
     FAIL: { x: 35, y: 88.5 },
-    NA: { x: 38, y: 88.5 },
+    "N/A": { x: 38, y: 88.5 },
   },
 
   ecvAccess: {
     PASS: { x: 34, y: 90.5 },
     FAIL: { x: 35, y: 90.5 },
-    NA: { x: 38, y: 90.5 },
+    "N/A": { x: 38, y: 90.5 },
   },
 
   tightnessTest: {
     PASS: { x: 32, y:92.5  },
     FAIL: { x: 35, y: 92.5 },
-    NA: { x: 38, y: 92.5 },
+    "N/A": { x: 38, y: 92.5 },
   },
 
   equipotentialBonding: {
     PASS: { x: 34, y: 94.5 },
     FAIL: { x: 35, y: 94.5 },
-    NA: { x: 38, y: 94.5 },
+    "N/A": { x: 38, y: 94.5 },
   },
 }
 export const appliancePositions = [

@@ -119,7 +119,7 @@ export async function generateCertificatePdf(
     const value = (data as any)[key];
     if (!value) return;
 
-    const pos = positions[value as "PASS" | "FAIL" | "NA"];
+    const pos = positions[value as "PASS" | "FAIL" | "N/A"];
     if (!pos) return;
 
     const x = (pos.x / 100) * width;
