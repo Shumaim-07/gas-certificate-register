@@ -261,6 +261,7 @@ export interface SavedCertificate {
   data: CertificateData
   createdAt: string
   updatedAt: string
+  editCount: number
 }
 
 /* ---------------- ENGINEER COPY ---------------- */

@@ -34,10 +34,23 @@ router.post('/', async (req, res) => {
   res.status(201).json(certificateToJson(certificate))
 })
 
+const ONE_WEEK_MS = 7 * 24 * 60 * 60 * 1000
+const MAX_EDITS = 3
+
 router.put('/:id', async (req, res) => {
   const certificate = await Certificate.findOne({ _id: req.params.id, engineerId: req.user.id })
   if (!certificate) {
     return res.status(404).json({ error: 'Certificate not found' })
+  }
+
+  const age = Date.now() - new Date(certificate.createdAt).getTime()
+  if (age > ONE_WEEK_MS) {
+    return res.status(403).json({ error: 'This certificate can no longer be edited. The 1-week edit window has expired.', code: 'EDIT_WINDOW_EXPIRED' })
+  }
+
+  const editCount = certificate.editCount ?? 0
+  if (editCount >= MAX_EDITS) {
+    return res.status(403).json({ error: 'This certificate has reached the maximum of 3 edits.', code: 'EDIT_LIMIT_REACHED' })
   }
 
   if (req.body.certificateRef !== undefined) {
@@ -46,6 +59,7 @@ router.put('/:id', async (req, res) => {
   if (req.body.data !== undefined) {
     certificate.data = req.body.data
   }
+  certificate.editCount = editCount + 1
 
   await certificate.save()
   res.json(certificateToJson(certificate))

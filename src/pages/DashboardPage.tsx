@@ -6,6 +6,8 @@ import { useAuth } from '../context/AuthContext'
 import type { SavedCertificate } from '../types'
 import flameImg from '../assets/flame.png'
 
+const ONE_WEEK_MS = 7 * 24 * 60 * 60 * 1000
+
 export function DashboardPage() {
   const { engineer, logout } = useAuth()
   const [certificates, setCertificates] = useState<SavedCertificate[]>([])
@@ -96,32 +98,42 @@ export function DashboardPage() {
             </div>
           ) : (
             <div className="eng-cert-list">
-              {certificates.map((cert) => (
-                <div key={cert.id} className="eng-cert-row">
-                  <div className="eng-cert-ref">{cert.certificateRef || '—'}</div>
-                  <div className="eng-cert-detail">
-                    <span className="eng-cert-property">{cert.data.siteHouseAddress || cert.data.propertyAddress || '—'}</span>
-                    <span className="eng-cert-meta">{cert.data.landlordName || '—'} · {cert.data.issueDate || '—'}</span>
+              {certificates.map((cert) => {
+                const age = Date.now() - new Date(cert.createdAt).getTime()
+                const locked = age > ONE_WEEK_MS || (cert.editCount ?? 0) >= 3
+                const editsLeft = Math.max(0, 3 - (cert.editCount ?? 0))
+                const editTitle = editsLeft === 1 ? '1 edit remaining' : `${editsLeft} edits remaining`
+                return (
+                  <div key={cert.id} className="eng-cert-row">
+                    <div className="eng-cert-ref">{cert.certificateRef || '—'}</div>
+                    <div className="eng-cert-detail">
+                      <span className="eng-cert-property">{cert.data.siteHouseAddress || cert.data.propertyAddress || '—'}</span>
+                      <span className="eng-cert-meta">{cert.data.landlordName || '—'} · {cert.data.issueDate || '—'}</span>
+                    </div>
+                    <div className="eng-cert-actions">
+                      {locked ? (
+                        <span className="eng-cert-btn eng-cert-btn--locked" title="This certificate can no longer be edited">Locked</span>
+                      ) : (
+                        <Link to={`/certificate/${cert.id}`} className="eng-cert-btn" title={editTitle}>Edit</Link>
+                      )}
+                      <button
+                        type="button"
+                        className="eng-cert-btn eng-cert-btn--primary"
+                        onClick={async () => {
+                          try {
+                            const { downloadCertificatePdf } = await import('../pdfGenerator')
+                            await downloadCertificatePdf(cert.data)
+                          } catch (err) {
+                            console.error('Failed to print PDF:', err)
+                          }
+                        }}
+                      >
+                        PDF
+                      </button>
+                    </div>
                   </div>
-                  <div className="eng-cert-actions">
-                    <Link to={`/certificate/${cert.id}`} className="eng-cert-btn">Edit</Link>
-                    <button
-                      type="button"
-                      className="eng-cert-btn eng-cert-btn--primary"
-                      onClick={async () => {
-                        try {
-                          const { downloadCertificatePdf } = await import('../pdfGenerator')
-                          await downloadCertificatePdf(cert.data)
-                        } catch (err) {
-                          console.error('Failed to print PDF:', err)
-                        }
-                      }}
-                    >
-                      PDF
-                    </button>
-                  </div>
-                </div>
-              ))}
+                )
+              })}
             </div>
           )}
         </section>

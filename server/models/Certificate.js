@@ -5,6 +5,7 @@ const certificateSchema = new mongoose.Schema(
     engineerId: { type: mongoose.Schema.Types.ObjectId, ref: 'Engineer', required: true },
     certificateRef: { type: String, default: '' },
     data: { type: mongoose.Schema.Types.Mixed, required: true },
+    editCount: { type: Number, default: 0 },
   },
   { timestamps: true },
 )
@@ -17,6 +18,7 @@ export function certificateToJson(doc) {
     data: doc.data,
     createdAt: doc.createdAt,
     updatedAt: doc.updatedAt,
+    editCount: doc.editCount ?? 0,
   }
 }
 

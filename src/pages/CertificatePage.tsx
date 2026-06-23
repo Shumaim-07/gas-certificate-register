@@ -7,7 +7,8 @@ import { downloadCertificatePdf } from '../pdfGenerator'
 import { certificateFromEngineer, emptyCertificateData, type CertificateData } from '../types'
 import { useEffect, useState } from 'react'
 
-const ONE_DAY_MS = 24 * 60 * 60 * 1000
+const ONE_WEEK_MS = 7 * 24 * 60 * 60 * 1000
+const MAX_EDITS = 3
 
 export function CertificatePage() {
   const { id } = useParams()
@@ -20,6 +21,7 @@ export function CertificatePage() {
   const [loading, setLoading] = useState(!isNew)
   const [error, setError] = useState<string | null>(null)
   const [isLocked, setIsLocked] = useState(false)
+  const [lockReason, setLockReason] = useState<'week_expired' | 'edit_limit' | null>(null)
 
   useEffect(() => {
     if (!engineer) return
@@ -35,8 +37,13 @@ export function CertificatePage() {
     api.getCertificate(id)
       .then((cert) => {
         const age = Date.now() - new Date(cert.createdAt).getTime()
-        if (age > ONE_DAY_MS) {
+        const editCount = cert.editCount ?? 0
+        if (age > ONE_WEEK_MS) {
           setIsLocked(true)
+          setLockReason('week_expired')
+        } else if (editCount >= MAX_EDITS) {
+          setIsLocked(true)
+          setLockReason('edit_limit')
         }
         setData(cert.data)
       })
@@ -76,7 +83,11 @@ export function CertificatePage() {
         <div className="certificate-form-wrap">
           <div className="alert alert-error certificate-error" style={{ textAlign: 'center', padding: '2rem' }}>
             <strong>Certificate Locked</strong>
-            <p style={{ marginTop: '0.5rem' }}>This certificate was issued more than 24 hours ago and can no longer be edited.</p>
+            <p style={{ marginTop: '0.5rem' }}>
+              {lockReason === 'edit_limit'
+                ? 'This certificate has been edited 3 times and can no longer be modified.'
+                : 'This certificate was issued more than 1 week ago and can no longer be edited.'}
+            </p>
             <Link to="/dashboard" className="eng-btn-primary" style={{ display: 'inline-block', marginTop: '1rem' }}>
               ← Back to Dashboard
             </Link>
