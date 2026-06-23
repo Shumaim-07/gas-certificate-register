@@ -24,26 +24,15 @@ const FAQ_ITEMS = [
 
 function LogoIcon({
   size = 28,
-  darkBg = false,
 }: {
   size?: number;
   darkBg?: boolean;
 }) {
   return (
     <svg width={size} height={size} viewBox="0 0 28 28" fill="none">
-      <circle
-        cx="14"
-        cy="14"
-        r="14"
-        fill={darkBg ? "rgba(255,255,255,0.12)" : "#3D3431"}
-      />
-      <polyline
-        points="8,14 12,18 20,10"
-        stroke="#F4EA03"
-        strokeWidth="2.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      <path d="M14,2 C17,5 21,10 21,15 C21,20.5 18,24 14,24 C10,24 7,20.5 7,15 C7,10 11,5 14,2Z" fill="#F97316"/>
+      <path d="M14,10 C15.5,12 17.5,14.5 17.5,17.5 C17.5,20.5 16,22.5 14,22.5 C12,22.5 10.5,20.5 10.5,17.5 C10.5,14.5 12.5,12 14,10Z" fill="#FBBF24"/>
+      <path d="M14,15 C14.8,16.2 15.5,17.2 15.5,18.5 C15.5,20 14.9,21 14,21 C13.1,21 12.5,20 12.5,18.5 C12.5,17.2 13.2,16.2 14,15Z" fill="#FEF08A"/>
     </svg>
   );
 }
