@@ -1685,22 +1685,6 @@ a {
     grid-template-columns: 1fr 1fr;
   }
 
-  .eng-cert-row {
-    flex-wrap: wrap;
-  }
-
-  .eng-cert-detail {
-    width: 100%;
-    order: 2;
-  }
-
-  .eng-cert-ref {
-    order: 1;
-  }
-
-  .eng-cert-actions {
-    order: 3;
-  }
 
   .cf-step-label {
     display: none;
@@ -1718,6 +1702,28 @@ a {
   .review-summary,
   .review-grid {
     grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 540px) {
+  .eng-cert-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding: 0.85rem 0.9rem;
+  }
+
+  .eng-cert-ref {
+    width: 100%;
+  }
+
+  .eng-cert-detail {
+    width: 100%;
+  }
+
+  .eng-cert-actions {
+    width: 100%;
+    justify-content: flex-start;
   }
 }
 
