@@ -1707,23 +1707,27 @@ a {
 
 @media (max-width: 540px) {
   .eng-cert-row {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-wrap: wrap;
+    align-items: center;
     gap: 0.5rem;
     padding: 0.85rem 0.9rem;
   }
 
   .eng-cert-ref {
+    order: 1;
+    flex-shrink: 0;
     width: fit-content;
   }
 
-  .eng-cert-detail {
-    width: 100%;
+  .eng-cert-actions {
+    order: 2;
+    margin-left: auto;
+    flex-shrink: 0;
   }
 
-  .eng-cert-actions {
+  .eng-cert-detail {
+    order: 3;
     width: 100%;
-    justify-content: flex-start;
   }
 }
 
