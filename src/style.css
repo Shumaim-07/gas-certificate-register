@@ -1714,7 +1714,7 @@ a {
   }
 
   .eng-cert-ref {
-    width: 100%;
+    width: fit-content;
   }
 
   .eng-cert-detail {
