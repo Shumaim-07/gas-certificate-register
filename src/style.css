@@ -1709,8 +1709,8 @@ a {
   .eng-cert-row {
     flex-wrap: wrap;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.85rem 0.9rem;
+    gap: 0.3rem 0.5rem;
+    padding: 0.85rem 1rem;
   }
 
   .eng-cert-ref {
@@ -1721,12 +1721,13 @@ a {
 
   .eng-cert-actions {
     order: 2;
-    margin-left: auto;
     flex-shrink: 0;
+    margin-left: auto;
   }
 
   .eng-cert-detail {
     order: 3;
+    flex: 0 0 100%;
     width: 100%;
   }
 }
