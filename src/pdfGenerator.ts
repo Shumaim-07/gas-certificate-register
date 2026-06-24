@@ -29,8 +29,8 @@ function capWords(text: string): string {
 }
 
 function dynamicFontSize(text: string, baseSize: number): number {
-  if (text.length <= 14) return baseSize;
-  return Math.max(5, (baseSize * 14) / text.length);
+  if (text.length <= 11) return baseSize;
+  return Math.max(5, (baseSize * 11) / text.length);
 }
 
 function getFieldValue(
@@ -172,6 +172,7 @@ export async function generateCertificatePdf(
     const serialText = up(appliance.serialNumber || "");
     drawField(modelText, { ...pos.model, fontSize: dynamicFontSize(modelText, pos.model.fontSize ?? 8) });
     drawField(serialText, { ...pos.serialNumber, fontSize: dynamicFontSize(serialText, pos.serialNumber.fontSize ?? 8) });
+
     drawField(up(appliance.ownedBy || ""), pos.ownedBy);
     drawField(up(appliance.inspected || ""), pos.inspected);
     drawField(up(appliance.flueType || ""), pos.flueType);
