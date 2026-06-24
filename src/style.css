@@ -920,6 +920,31 @@ a {
   border-color: #3D3431;
 }
 
+.eng-edit-error {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.75rem;
+  background: #fef2f2;
+  border: 1px solid #fca5a5;
+  border-radius: 8px;
+  color: #b91c1c;
+  font-size: 0.875rem;
+}
+
+.eng-edit-error-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #b91c1c;
+  font-size: 1rem;
+  padding: 0;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
 .eng-cert-btn--primary:hover {
   background: #2a2320;
   border-color: #2a2320;

@@ -12,6 +12,7 @@ export function DashboardPage() {
   const { engineer, logout } = useAuth()
   const [certificates, setCertificates] = useState<SavedCertificate[]>([])
   const [loading, setLoading] = useState(true)
+  const [editError, setEditError] = useState<string | null>(null)
 
   useEffect(() => {
     api.getCertificates()
@@ -89,6 +90,13 @@ export function DashboardPage() {
             <Link to="/certificate/new" className="eng-btn-primary eng-btn-sm">+ New</Link>
           </div>
 
+          {editError && (
+            <div className="eng-edit-error">
+              <span>{editError}</span>
+              <button type="button" className="eng-edit-error-close" onClick={() => setEditError(null)}>✕</button>
+            </div>
+          )}
+
           {loading ? (
             <Loader text="Loading certificates…" />
           ) : certificates.length === 0 ? (
@@ -112,7 +120,15 @@ export function DashboardPage() {
                     </div>
                     <div className="eng-cert-actions">
                       {locked ? (
-                        <span className="eng-cert-btn eng-cert-btn--locked" title="This certificate can no longer be edited">Locked</span>
+                        <button
+                          type="button"
+                          className="eng-cert-btn"
+                          onClick={() => setEditError(
+                            (cert.editCount ?? 0) >= 3
+                              ? 'This certificate has reached the maximum of 3 edits and can no longer be modified.'
+                              : 'This certificate was issued more than 1 week ago and can no longer be edited.'
+                          )}
+                        >Edit</button>
                       ) : (
                         <Link to={`/certificate/${cert.id}`} className="eng-cert-btn" title={editTitle}>Edit</Link>
                       )}
