@@ -320,54 +320,7 @@ export function CertificateForm({
           <>
             <h2>Safety Checks</h2>
 
-            <div className="cf-field">
-              <label>Number of Appliances</label>
-              <select
-                value={data.applianceCount}
-                onChange={(e) => {
-                  const count = Number(e.target.value);
-                  const newAppliances = Array.from(
-                    { length: count },
-                    (_, i) =>
-                      data.appliances?.[i] || {
-                        location: "",
-                        type: "HOB" as const,
-                        manufacturer: "",
-                        model: "",
-                        serialNumber: "",
-                        ownedBy: "YES" as const,
-                        inspected: "YES" as const,
-                        flueType: "FL",
-                        operatingPressure: "",
-                        safetyDevice: "PASS" as const,
-                        ventilation: "YES" as const,
-                        visualFlueCondition: "N/A" as const,
-                        flueOperationChecks: "N/A" as const,
-                        combustionReading: "N/A",
-                        applianceServiced: "YES" as const,
-                        coAlarmFitted: "YES" as const,
-                        coAlarmTested: "PASS" as const,
-                        safeToUse: "YES" as const,
-                        safetyDefect: "",
-                        giuspClassification: "",
-                        warningRecordSerial: "",
-                        remedialAction: "",
-                        workDetails: "",
-                      },
-                  );
-                  onChange({
-                    ...data,
-                    applianceCount: count,
-                    appliances: newAppliances,
-                  });
-                }}
-              >
-                <option value={1}>1 Appliance</option>
-                <option value={2}>2 Appliances</option>
-                <option value={3}>3 Appliances</option>
-                <option value={4}>4 Appliances</option>
-              </select>
-            </div>
+            
 
             <div className="appliance-card">
               <p className="appliance-card-title">Installation Safety Checks</p>
@@ -418,7 +371,54 @@ export function CertificateForm({
         {step === 4 && (
           <>
             <h2>Appliance Details</h2>
-
+<div className="cf-field">
+              <label>Number of Appliances</label>
+              <select
+                value={data.applianceCount}
+                onChange={(e) => {
+                  const count = Number(e.target.value);
+                  const newAppliances = Array.from(
+                    { length: count },
+                    (_, i) =>
+                      data.appliances?.[i] || {
+                        location: "",
+                        type: "HOB" as const,
+                        manufacturer: "",
+                        model: "",
+                        serialNumber: "",
+                        ownedBy: "YES" as const,
+                        inspected: "YES" as const,
+                        flueType: "FL",
+                        operatingPressure: "",
+                        safetyDevice: "PASS" as const,
+                        ventilation: "YES" as const,
+                        visualFlueCondition: "N/A" as const,
+                        flueOperationChecks: "N/A" as const,
+                        combustionReading: "N/A",
+                        applianceServiced: "YES" as const,
+                        coAlarmFitted: "YES" as const,
+                        coAlarmTested: "PASS" as const,
+                        safeToUse: "YES" as const,
+                        safetyDefect: "",
+                        giuspClassification: "",
+                        warningRecordSerial: "",
+                        remedialAction: "",
+                        workDetails: "",
+                      },
+                  );
+                  onChange({
+                    ...data,
+                    applianceCount: count,
+                    appliances: newAppliances,
+                  });
+                }}
+              >
+                <option value={1}>1 Appliance</option>
+                <option value={2}>2 Appliances</option>
+                <option value={3}>3 Appliances</option>
+                <option value={4}>4 Appliances</option>
+              </select>
+            </div>
             {(data.appliances || []).map((appliance, index) => (
               <div key={index} className="appliance-card">
                 <p className="appliance-card-title">Appliance {index + 1}</p>
