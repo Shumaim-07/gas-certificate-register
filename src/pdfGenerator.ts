@@ -30,7 +30,11 @@ function capWords(text: string): string {
 
 function dynamicFontSize(text: string, baseSize: number): number {
   if (text.length <= 11) return baseSize;
-  return Math.max(5, (baseSize * 11) / text.length);
+  
+  const ratio = 11 / text.length;
+  const newSize = baseSize * Math.sqrt(ratio); // Square root slows it down
+  
+  return Math.max(5, newSize);
 }
 
 function getFieldValue(
