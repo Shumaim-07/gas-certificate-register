@@ -24,6 +24,10 @@ function formatDate(value: string): string {
   });
 }
 
+function capWords(text: string): string {
+  return text.replace(/(?:^|\s)\S/g, (c) => c.toUpperCase());
+}
+
 function getFieldValue(
   data: CertificateData,
   key: keyof CertificateData,
@@ -43,7 +47,7 @@ function getFieldValue(
     return formatDate(String(value));
   }
 
-  return value as string;
+  return (value as string).toUpperCase();
 }
 
 function generateFileName(data: CertificateData): string {
@@ -153,30 +157,33 @@ export async function generateCertificatePdf(
       });
     };
 
-    drawField(appliance.location || "", pos.location);
-    drawField(appliance.type || "", pos.type);
-    drawField(appliance.manufacturer || "", pos.manufacturer);
-    drawField(appliance.model || "", pos.model);
-    drawField(appliance.serialNumber || "", pos.serialNumber);
-    drawField(appliance.ownedBy || "", pos.ownedBy);
-    drawField(appliance.inspected || "", pos.inspected);
-    drawField(appliance.flueType || "", pos.flueType);
+    const up = (v: string) => v.toUpperCase();
+    const cap = (v: string) => capWords(v);
 
-    drawField(appliance.operatingPressure || "", pos.operatingPressure);
-    drawField(appliance.safetyDevice || "", pos.safetyDevice);
-    drawField(appliance.ventilation || "", pos.ventilation);
-    drawField(appliance.visualFlueCondition || "", pos.visualFlueCondition);
-    drawField(appliance.flueOperationChecks || "", pos.flueOperationChecks);
-    drawField(appliance.combustionReading || "", pos.combustionReading);
-    drawField(appliance.applianceServiced || "", pos.applianceServiced);
-    drawField(appliance.coAlarmFitted || "", pos.coAlarmFitted);
-    drawField(appliance.coAlarmTested || "", pos.coAlarmTested);
-    drawField(appliance.safeToUse || "", pos.safeToUse);
-    drawField(appliance.safetyDefect || "", pos.safetyDefect);
-    drawField(appliance.giuspClassification || "", pos.giuspClassification);
-    drawField(appliance.warningRecordSerial || "", pos.warningRecordSerial);
-    drawField(appliance.remedialAction || "", pos.remedialAction);
-    drawField(appliance.workDetails || "", pos.workDetails);
+    drawField(up(appliance.location || ""), pos.location);
+    drawField(up(appliance.type || ""), pos.type);
+    drawField(up(appliance.manufacturer || ""), pos.manufacturer);
+    drawField(up(appliance.model || ""), pos.model);
+    drawField(up(appliance.serialNumber || ""), pos.serialNumber);
+    drawField(up(appliance.ownedBy || ""), pos.ownedBy);
+    drawField(up(appliance.inspected || ""), pos.inspected);
+    drawField(up(appliance.flueType || ""), pos.flueType);
+
+    drawField(up(appliance.operatingPressure || ""), pos.operatingPressure);
+    drawField(up(appliance.safetyDevice || ""), pos.safetyDevice);
+    drawField(up(appliance.ventilation || ""), pos.ventilation);
+    drawField(up(appliance.visualFlueCondition || ""), pos.visualFlueCondition);
+    drawField(up(appliance.flueOperationChecks || ""), pos.flueOperationChecks);
+    drawField(up(appliance.combustionReading || ""), pos.combustionReading);
+    drawField(up(appliance.applianceServiced || ""), pos.applianceServiced);
+    drawField(up(appliance.coAlarmFitted || ""), pos.coAlarmFitted);
+    drawField(up(appliance.coAlarmTested || ""), pos.coAlarmTested);
+    drawField(up(appliance.safeToUse || ""), pos.safeToUse);
+    drawField(cap(appliance.safetyDefect || ""), pos.safetyDefect);
+    drawField(cap(appliance.giuspClassification || ""), pos.giuspClassification);
+    drawField(cap(appliance.warningRecordSerial || ""), pos.warningRecordSerial);
+    drawField(cap(appliance.remedialAction || ""), pos.remedialAction);
+    drawField(cap(appliance.workDetails || ""), pos.workDetails);
   });
 
   if (data.engineerSignature) {

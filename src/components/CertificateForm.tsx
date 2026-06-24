@@ -193,7 +193,7 @@ export function CertificateForm({
                 <input
                   placeholder="e.g. SW1A 1AA"
                   value={data.sitePostCode}
-                  onChange={(e) => updateField("sitePostCode", e.target.value)}
+                  onChange={(e) => updateField("sitePostCode", e.target.value.toUpperCase())}
                 />
               </div>
             </div>
@@ -286,7 +286,7 @@ export function CertificateForm({
                   placeholder="e.g. SW1A 1AA"
                   value={data.landlordPostCode}
                   onChange={(e) =>
-                    updateField("landlordPostCode", e.target.value)
+                    updateField("landlordPostCode", e.target.value.toUpperCase())
                   }
                 />
               </div>
@@ -483,11 +483,12 @@ export function CertificateForm({
                     />
                   </div>
                   <div className="cf-field">
-                    <label>Flue Type (auto)</label>
+                    <label>Flue Type</label>
                     <input
                       value={appliance.flueType}
-                      readOnly
-                      className="cf-readonly"
+                      onChange={(e) =>
+                        updateAppliance(index, "flueType", e.target.value.toUpperCase())
+                      }
                     />
                   </div>
                 </div>
