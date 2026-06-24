@@ -161,14 +161,14 @@ export function CertificateForm({
               <input
                 placeholder="1st line of the property address"
                 value={data.siteHouseAddress}
-                maxLength={40}
+                maxLength={28}
                 onChange={(e) => {
                   updateField("siteHouseAddress", capWords(e.target.value));
                   setStep1Error(null);
                 }}
               />
               <span style={{ fontSize: "0.75rem", color: "#888" }}>
-                {data.siteHouseAddress.length}/40
+                {data.siteHouseAddress.length}/28
               </span>
               {step1Error && (
                 <span style={{ fontSize: "0.8rem", color: "#c00" }}>
@@ -259,13 +259,13 @@ export function CertificateForm({
               <input
                 placeholder="Landlord's address"
                 value={data.landlordHouseAddress}
-                maxLength={40}
+                maxLength={28}
                 onChange={(e) =>
                   updateField("landlordHouseAddress", capWords(e.target.value))
                 }
               />
               <span style={{ fontSize: "0.75rem", color: "#888" }}>
-                {data.landlordHouseAddress.length}/40
+                {data.landlordHouseAddress.length}/28
               </span>
             </div>
 
