@@ -28,6 +28,11 @@ function capWords(text: string): string {
   return text.replace(/(?:^|\s)\S/g, (c) => c.toUpperCase());
 }
 
+function dynamicFontSize(text: string, baseSize: number): number {
+  if (text.length <= 14) return baseSize;
+  return Math.max(5, (baseSize * 14) / text.length);
+}
+
 function getFieldValue(
   data: CertificateData,
   key: keyof CertificateData,
@@ -163,8 +168,10 @@ export async function generateCertificatePdf(
     drawField(up(appliance.location || ""), pos.location);
     drawField(up(appliance.type || ""), pos.type);
     drawField(up(appliance.manufacturer || ""), pos.manufacturer);
-    drawField(up(appliance.model || ""), pos.model);
-    drawField(up(appliance.serialNumber || ""), pos.serialNumber);
+    const modelText = up(appliance.model || "");
+    const serialText = up(appliance.serialNumber || "");
+    drawField(modelText, { ...pos.model, fontSize: dynamicFontSize(modelText, pos.model.fontSize ?? 8) });
+    drawField(serialText, { ...pos.serialNumber, fontSize: dynamicFontSize(serialText, pos.serialNumber.fontSize ?? 8) });
     drawField(up(appliance.ownedBy || ""), pos.ownedBy);
     drawField(up(appliance.inspected || ""), pos.inspected);
     drawField(up(appliance.flueType || ""), pos.flueType);
