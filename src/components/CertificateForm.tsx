@@ -27,6 +27,10 @@ const SAFETY_FIELDS = [
   { key: "equipotentialBonding", label: "Protective Equipotential bonding satisfactory?" },
 ];
 
+function capWords(str: string): string {
+  return str.replace(/(?:^|\s)\S/g, (c) => c.toUpperCase())
+}
+
 export function CertificateForm({ data, onChange, onPrint, saving }: CertificateFormProps) {
   const [step, setStep] = useState(1);
   const [step1Error, setStep1Error] = useState<string | null>(null);
@@ -111,7 +115,7 @@ export function CertificateForm({ data, onChange, onPrint, saving }: Certificate
               <input
                 placeholder="Full name of tenant"
                 value={data.siteName}
-                onChange={(e) => updateField("siteName", e.target.value)}
+                onChange={(e) => updateField("siteName", capWords(e.target.value))}
               />
             </div>
 
@@ -121,7 +125,7 @@ export function CertificateForm({ data, onChange, onPrint, saving }: Certificate
                 placeholder="Street address of the property"
                 value={data.siteHouseAddress}
                 maxLength={40}
-                onChange={(e) => { updateField("siteHouseAddress", e.target.value); setStep1Error(null); }}
+                onChange={(e) => { updateField("siteHouseAddress", capWords(e.target.value)); setStep1Error(null); }}
               />
               <span style={{ fontSize: '0.75rem', color: '#888' }}>{data.siteHouseAddress.length}/40</span>
               {step1Error && <span style={{ fontSize: '0.8rem', color: '#c00' }}>{step1Error}</span>}
@@ -133,7 +137,7 @@ export function CertificateForm({ data, onChange, onPrint, saving }: Certificate
                 <input
                   placeholder="Town or city"
                   value={data.siteArea}
-                  onChange={(e) => updateField("siteArea", e.target.value)}
+                  onChange={(e) => updateField("siteArea", capWords(e.target.value))}
                 />
               </div>
               <div className="cf-field">
@@ -151,6 +155,7 @@ export function CertificateForm({ data, onChange, onPrint, saving }: Certificate
               <input
                 placeholder="Tenant's phone number"
                 value={data.siteContactNumber}
+                maxLength={11}
                 onChange={(e) => updateField("siteContactNumber", e.target.value)}
               />
             </div>
@@ -186,7 +191,7 @@ export function CertificateForm({ data, onChange, onPrint, saving }: Certificate
               <input
                 placeholder="Full name of landlord or homeowner"
                 value={data.landlordName}
-                onChange={(e) => updateField("landlordName", e.target.value)}
+                onChange={(e) => updateField("landlordName", capWords(e.target.value))}
               />
             </div>
 
@@ -196,7 +201,7 @@ export function CertificateForm({ data, onChange, onPrint, saving }: Certificate
                 placeholder="Landlord's address"
                 value={data.landlordHouseAddress}
                 maxLength={40}
-                onChange={(e) => updateField("landlordHouseAddress", e.target.value)}
+                onChange={(e) => updateField("landlordHouseAddress", capWords(e.target.value))}
               />
               <span style={{ fontSize: '0.75rem', color: '#888' }}>{data.landlordHouseAddress.length}/40</span>
             </div>
@@ -207,7 +212,7 @@ export function CertificateForm({ data, onChange, onPrint, saving }: Certificate
                 <input
                   placeholder="Town or city"
                   value={data.landlordArea}
-                  onChange={(e) => updateField("landlordArea", e.target.value)}
+                  onChange={(e) => updateField("landlordArea", capWords(e.target.value))}
                 />
               </div>
               <div className="cf-field">
@@ -225,6 +230,7 @@ export function CertificateForm({ data, onChange, onPrint, saving }: Certificate
               <input
                 placeholder="Landlord's phone number"
                 value={data.landlordContactNumber}
+                maxLength={11}
                 onChange={(e) => updateField("landlordContactNumber", e.target.value)}
               />
             </div>

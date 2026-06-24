@@ -920,6 +920,16 @@ a {
   border-color: #3D3431;
 }
 
+.eng-cert-btn--delete {
+  color: #dc2626;
+  border-color: #fca5a5;
+}
+
+.eng-cert-btn--delete:hover {
+  background: #fef2f2;
+  border-color: #dc2626;
+}
+
 .eng-edit-error {
   display: flex;
   align-items: center;

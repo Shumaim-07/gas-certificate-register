@@ -17,16 +17,20 @@ const REQUIRED_FIELDS: (keyof EngineerFormData)[] = [
   'houseAddress', 'area', 'postCode', 'contactNumber',
 ]
 
-const fields: { key: keyof EngineerFormData; label: string; placeholder?: string; multiline?: boolean; full?: boolean }[] = [
+const fields: { key: keyof EngineerFormData; label: string; placeholder?: string; multiline?: boolean; full?: boolean; capitalize?: boolean; maxLength?: number }[] = [
   { key: 'gasSafeRegisterNumber', label: 'Gas Safe Register No.', placeholder: 'e.g. 512887' },
-  { key: 'engineerName', label: 'Registered Engineer Name', placeholder: 'Full name as on Gas Safe card' },
+  { key: 'engineerName', label: 'Registered Engineer Name', placeholder: 'Full name as on Gas Safe card', capitalize: true },
   { key: 'gasSafeLicenceNumber', label: 'Licence Number', placeholder: 'e.g. 123456' },
-  { key: 'businessName', label: 'Business Name', placeholder: 'Your company or trading name' },
-  { key: 'houseAddress', label: 'Street Address', placeholder: 'House number and street', multiline: true, full: true },
-  { key: 'area', label: 'Area / City', placeholder: 'Town or city', full: true },
+  { key: 'businessName', label: 'Business Name', placeholder: 'Your company or trading name', capitalize: true },
+  { key: 'houseAddress', label: 'Street Address', placeholder: 'House number and street', multiline: true, full: true, capitalize: true },
+  { key: 'area', label: 'Area / City', placeholder: 'Town or city', full: true, capitalize: true },
   { key: 'postCode', label: 'Post Code', placeholder: 'e.g. SW1A 1AA' },
-  { key: 'contactNumber', label: 'Contact Number', placeholder: 'e.g. 07700 900000' },
+  { key: 'contactNumber', label: 'Contact Number', placeholder: 'e.g. 07700 900000', maxLength: 11 },
 ]
+
+function capWords(str: string): string {
+  return str.replace(/(?:^|\s)\S/g, (c) => c.toUpperCase())
+}
 
 export function EngineerForm({
   data,
@@ -40,7 +44,9 @@ export function EngineerForm({
   const [errors, setErrors] = useState<Partial<Record<keyof EngineerFormData, string>>>({})
 
   const updateField = (key: keyof EngineerFormData, value: string) => {
-    onChange({ ...data, [key]: value })
+    const field = fields.find((f) => f.key === key)
+    const processed = field?.capitalize ? capWords(value) : value
+    onChange({ ...data, [key]: processed })
     if (errors[key]) setErrors((prev) => ({ ...prev, [key]: undefined }))
   }
 
@@ -97,6 +103,7 @@ export function EngineerForm({
                   value={data[field.key] ?? ''}
                   onChange={(e) => updateField(field.key, e.target.value)}
                   placeholder={field.placeholder}
+                  maxLength={field.maxLength}
                   style={fieldError ? { borderColor: '#c00' } : undefined}
                 />
               )}
