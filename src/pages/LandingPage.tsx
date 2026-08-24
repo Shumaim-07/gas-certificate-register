@@ -2,7 +2,9 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { RequestModal } from "../components/RequestModal";
 import { useAuth } from "../context/AuthContext";
-import flameImg from "../assets/flame.png";
+// import flameImg from "../assets/logo.png"
+import wbg_logo from "../assets/logo-white-bg.png";
+import logo from "../assets/logo.png"
 
 const FAQ_ITEMS = [
   {
@@ -23,8 +25,8 @@ const FAQ_ITEMS = [
   },
 ];
 
-function LogoIcon({ size = 28 }: { size?: number; darkBg?: boolean }) {
-  return <img src={flameImg} width={size} height={size} alt="" style={{ display: "block" }} />;
+function LogoIcon({ size = 57 }: { size?: number; darkBg?: boolean }) {
+  return <img src={wbg_logo} width={size} height={size} alt="" style={{ display: "block" }} />;
 }
 
 export function LandingPage() {
@@ -91,7 +93,7 @@ export function LandingPage() {
           <div className="lp-hero-left">
             <span className="lp-badge">
               <span className="small-dot"></span>
-              UK GAS SAFE COMPATIBLE
+              DIGITAL GAS SAFETY CERTIFICATES
             </span>
             <h1 className="lp-hero-title">
               Gas Safety
@@ -183,7 +185,7 @@ export function LandingPage() {
           <p className="lp-problem-body">
             The CP12 hasn't changed — but the way you produce it should.
             GasCertify gives you the <strong className="strong-2nd">exact same certificate</strong>,
-            generated digitally, fully compliant, and delivered before you've
+            generated digitally and designed for gas engineers and delivered before you've
             packed up your tools.
           </p>
           <div className="lp-compare-cols">
@@ -224,7 +226,7 @@ export function LandingPage() {
               </h2>
             </div>
             <p className="lp-features-aside">
-              Built with UK Gas Safe engineers — for the way you actually work
+              Built with UK gas engineers — for the way you actually work
               between boilers, lofts and tenant doorbells.
             </p>
           </div>
@@ -232,7 +234,7 @@ export function LandingPage() {
             {[
               {
                 n: "01",
-                title: "Official CP12 layout",
+                title: "Digital CP12 layout",
                 desc: "Same fields, same structure as the paper certificate engineers know.",
               },
               {
@@ -243,7 +245,7 @@ export function LandingPage() {
               {
                 n: "03",
                 title: "Digital signature",
-                desc: "Sign with your finger on-site. Legally binding and timestamped.",
+                desc: "Sign digitally on-site with a timestamped signature.",
               },
               {
                 n: "04",
@@ -333,7 +335,7 @@ export function LandingPage() {
       <section className="lp-faq" id="faq">
         <div className="lp-container lp-faq-grid">
           <div className="lp-faq-left">
-            <LogoIcon size={40} />
+            <LogoIcon size={57} />
           </div>
           <div className="lp-faq-right">
             <p className="lp-eyebrow">FAQ</p>
@@ -385,13 +387,13 @@ export function LandingPage() {
         <div className="lp-container lp-footer-grid">
           <div className="lp-footer-brand">
             <div className="lp-footer-logo">
-              <LogoIcon size={24} darkBg />
+              <img src={logo} width={57} height={57} alt="GasCertify UK" style={{ display: "block" }} />
               <span className="lp-footer-name">GasCertify UK</span>
             </div>
             <p className="lp-footer-tag">
               Digital Gas Safety Certificates for UK engineers, landlords
               <br />
-              and letting agents. Modern, compliant, paperless.
+              and letting agents. Modern, simple, paperless.
             </p>
           </div>
           <div className="lp-footer-col">
@@ -411,8 +413,7 @@ export function LandingPage() {
             © {new Date().getFullYear()} GasCertify UK. All rights reserved.
           </p>
           <p>
-            Not affiliated with Gas Safe Register. Registered for Gas Safe
-            engineers.
+              Gas Safe Register is a registered trade mark of HSE and is used under licence.
           </p>
         </div>
       </footer>
