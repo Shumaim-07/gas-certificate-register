@@ -1,7 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import mongoose from 'mongoose'
-import { connectDb, ensureDbConnected, isDbConnected } from './db.js'
+import { connectDb, ensureDbConnected, isDbConnected, scheduleIdleDisconnect } from './db.js'
 import { CLIENT_URLS, NODE_ENV, PORT } from './config.js'
 import authRoutes from './routes/auth.js'
 import adminRoutes from './routes/admin.js'
@@ -41,15 +41,16 @@ app.get('/api/health', (_req, res) => {
 
 app.use(async (req, res, next) => {
   if (req.path === '/api/health') return next()
-  if (!isDbConnected()) {
-    try {
-      await ensureDbConnected()
-    } catch {
-      return res.status(503).json({
-        error: 'Database not connected. Start MongoDB and try again.',
-      })
-    }
+
+  try {
+    await ensureDbConnected()
+  } catch {
+    return res.status(503).json({
+      error: 'Database not connected. Start MongoDB and try again.',
+    })
   }
+
+  res.on('finish', scheduleIdleDisconnect)
   next()
 })
 
@@ -66,7 +67,10 @@ app.use((err, _req, res, _next) => {
 
 async function start() {
   try {
-    await connectDb()
+    if (NODE_ENV !== 'production') {
+      await connectDb()
+    }
+
     const server = app.listen(PORT, '0.0.0.0', () => {
       console.log(`API server listening on port ${PORT}`)
     })
