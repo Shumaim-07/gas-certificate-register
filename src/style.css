@@ -3143,7 +3143,11 @@ html {
   font-weight: 700;
   border-radius: 999px;
 }
-
+.lp-hero-logo {
+  display: flex;
+  justify-content: flex-end;   /* right-aligns logo to the container edge */
+  margin-bottom: 16px;
+}
 /* ── Responsive ── */
 @media (max-width: 900px) {
   .lp-container,
@@ -3180,8 +3184,15 @@ html {
   }
 
   .lp-faq-left {
-    display: none;
-  }
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+.hero-logo{
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
 
   .lp-footer-grid {
     grid-template-columns: 1fr;

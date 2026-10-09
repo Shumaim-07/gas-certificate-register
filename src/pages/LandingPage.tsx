@@ -88,93 +88,102 @@ export function LandingPage() {
       </nav>
 
       {/* ── HERO ── */}
-      <section className="lp-hero">
-        <div className="lp-container lp-hero-grid">
-          <div className="lp-hero-left">
-             <div style={{ marginBottom: "16px" }}>
-    <LogoIcon size={57} />
+<section className="lp-hero">
+
+  <div className="lp-container">
+    <div className="lp-hero-logo">
+      <LogoIcon size={57} />
+    </div>
   </div>
-            <span className="lp-badge">
-              <span className="small-dot"></span>
-              DIGITAL GAS SAFETY CERTIFICATES
-            </span>
-            <h1 className="lp-hero-title">
-              Gas Safety
-              <br />
-              Certificates, <span className="lp-mark">issued</span>
-              <br />
-              <span className="lp-mark">digitally</span> in minutes.
-            </h1>
-            <p className="lp-hero-sub">
-              Modern problems need modern solutions. Stop scribbling on paper
-              CP12 pads — create the exact same certificate online, sign it on
-              your phone, and email it to your landlord or tenant instantly.
-              Saved forever in the cloud.
-            </p>
-            <div className="lp-hero-btns">
-              <button
-                type="button"
-                className="lp-btn-dark"
-                onClick={() => setShowRequestModal(true)}
-              >
-                Request engineer access →
-              </button>
-              <Link to="/login" className="lp-btn-outline">
-                Engineer login
-              </Link>
-            </div>
-            <p className="lp-trust">TRUSTED • FAST • COMPLIANT • PAPERLESS</p>
+
+  <div className="lp-container lp-hero-grid">
+
+    <div className="lp-hero-left">
+      <span className="lp-badge">
+        <span className="small-dot"></span>
+        DIGITAL GAS SAFETY CERTIFICATES
+      </span>
+
+      <h1 className="lp-hero-title">
+        Gas Safety
+        <br />
+        Certificates, <span className="lp-mark">issued</span>
+        <br />
+        <span className="lp-mark">digitally</span> in minutes.
+      </h1>
+
+      <p className="lp-hero-sub">
+        Modern problems need modern solutions. Stop scribbling on paper
+        CP12 pads — create the exact same certificate online, sign it on
+        your phone, and email it to your landlord or tenant instantly.
+        Saved forever in the cloud.
+      </p>
+
+      <div className="lp-hero-btns">
+        <button
+          type="button"
+          className="lp-btn-dark"
+          onClick={() => setShowRequestModal(true)}
+        >
+          Request engineer access →
+        </button>
+        <Link to="/login" className="lp-btn-outline">
+          Engineer login
+        </Link>
+      </div>
+
+      <p className="lp-trust">TRUSTED • FAST • COMPLIANT • PAPERLESS</p>
+    </div>
+
+    <div className="lp-cert-wrapper">
+      {/* Yellow background frame */}
+      <div className="lp-cert-frame" />
+
+      {/* White card */}
+      <div className="lp-cert-card">
+        <div className="lp-cert-header">
+          <div>
+            <p className="lp-cert-label">Landlord / Homeowner Gas Safety Record</p>
+            <p className="lp-cert-title">CP12 · Digital</p>
           </div>
-
-        <div className="lp-cert-wrapper">
-  {/* Yellow background frame */}
-  <div className="lp-cert-frame" />
-  {/* White card */}
-  <div className="lp-cert-card">
-    {/* Header */}
-    <div className="lp-cert-header">
-      <div>
-        <p className="lp-cert-label">Landlord / Homeowner Gas Safety Record</p>
-        <p className="lp-cert-title">CP12 · Digital</p>
-      </div>
-      <span className="lp-cert-pass">Pass</span>
-    </div>
-    {/* Body */}
-    <dl className="lp-cert-grid">
-      <div className="lp-cert-field">
-        <dt>Property</dt>
-        <dd>14 Acacia Ave, London</dd>
-      </div>
-      <div className="lp-cert-field">
-        <dt>Engineer</dt>
-        <dd>J. Whitmore</dd>
-      </div>
-      <div className="lp-cert-field">
-        <dt>Gas Safe №</dt>
-        <dd>512-887</dd>
-      </div>
-      <div className="lp-cert-field">
-        <dt>Issued</dt>
-        <dd>16 Jun 2026</dd>
-      </div>
-      <div className="lp-cert-field">
-        <dt>Appliances</dt>
-        <dd>3 tested</dd>
-      </div>
-      <div className="lp-cert-field">
-        <dt>Next due</dt>
-        <dd>16 Jun 2027</dd>
-      </div>
-    </dl>
-    {/* Footer */}
-    <div className="lp-cert-footer">
-      Signed digitally by J. Whitmore — emailed to landlord &amp; tenant.
-    </div>
-  </div>
-</div>
-
+          <span className="lp-cert-pass">Pass</span>
         </div>
-      </section>
+
+        <dl className="lp-cert-grid">
+          <div className="lp-cert-field">
+            <dt>Property</dt>
+            <dd>14 Acacia Ave, London</dd>
+          </div>
+          <div className="lp-cert-field">
+            <dt>Engineer</dt>
+            <dd>J. Whitmore</dd>
+          </div>
+          <div className="lp-cert-field">
+            <dt>Gas Safe №</dt>
+            <dd>512-887</dd>
+          </div>
+          <div className="lp-cert-field">
+            <dt>Issued</dt>
+            <dd>16 Jun 2026</dd>
+          </div>
+          <div className="lp-cert-field">
+            <dt>Appliances</dt>
+            <dd>3 tested</dd>
+          </div>
+          <div className="lp-cert-field">
+            <dt>Next due</dt>
+            <dd>16 Jun 2027</dd>
+          </div>
+        </dl>
+
+        <div className="lp-cert-footer">
+          Signed digitally by J. Whitmore — emailed to landlord &amp; tenant.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
 
       {/* ── PROBLEM ── */}
       <section className="lp-problem" id="problem">
