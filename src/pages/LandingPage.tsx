@@ -2,9 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { RequestModal } from "../components/RequestModal";
 import { useAuth } from "../context/AuthContext";
-// import flameImg from "../assets/logo.png"
 import wbg_logo from "../assets/logo-white-bg.png";
-import logo from "../assets/logo.png"
 import { FireLogo } from "../components/FireLogo";
 
 const FAQ_ITEMS = [

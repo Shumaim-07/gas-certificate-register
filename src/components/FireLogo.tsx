@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
-import lottie, { AnimationItem } from "lottie-web";
+import lottie from "lottie-web";
+import type { AnimationItem } from "lottie-web";
 
 type FireLogoProps = {
   size?: number;
