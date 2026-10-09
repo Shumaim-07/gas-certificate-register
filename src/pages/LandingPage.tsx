@@ -5,6 +5,7 @@ import { useAuth } from "../context/AuthContext";
 // import flameImg from "../assets/logo.png"
 import wbg_logo from "../assets/logo-white-bg.png";
 import logo from "../assets/logo.png"
+import { FireLogo } from "../components/FireLogo";
 
 const FAQ_ITEMS = [
   {
@@ -42,7 +43,8 @@ export function LandingPage() {
       <nav className="lp-nav">
         <div className="lp-nav-inner">
           <Link to="/" className="lp-brand">
-            <LogoIcon />
+            {/* <LogoIcon /> */}
+             <FireLogo size={60} />
             <span className="lp-brand-name">GasCertify UK</span>
           </Link>
 
@@ -91,6 +93,9 @@ export function LandingPage() {
       <section className="lp-hero">
         <div className="lp-container lp-hero-grid">
           <div className="lp-hero-left">
+             <div style={{ marginBottom: "16px" }}>
+    <LogoIcon size={57} />
+  </div>
             <span className="lp-badge">
               <span className="small-dot"></span>
               DIGITAL GAS SAFETY CERTIFICATES
@@ -387,7 +392,7 @@ export function LandingPage() {
         <div className="lp-container lp-footer-grid">
           <div className="lp-footer-brand">
             <div className="lp-footer-logo">
-              <img src={logo} width={57} height={57} alt="GasCertify UK" style={{ display: "block" }} />
+               <FireLogo size={60} />
               <span className="lp-footer-name">GasCertify UK</span>
             </div>
             <p className="lp-footer-tag">
