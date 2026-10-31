@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { RequestModal } from "../components/RequestModal";
 import { useAuth } from "../context/AuthContext";
 import wbg_logo from "../assets/logo-white-bg.png";
-import { FireLogo } from "../components/FireLogo";
+// import { FireLogo } from "../components/FireLogo";
 import logo from "../assets/gascertify_logo.png"
 import yellow_logo from "../assets/gascertify_logo_yellow.png"
 
